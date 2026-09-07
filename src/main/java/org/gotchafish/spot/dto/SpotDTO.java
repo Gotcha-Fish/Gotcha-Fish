@@ -1,13 +1,13 @@
-package org.gotchafish.domain.spot;
+package org.gotchafish.spot.dto;
 
-public class Spot {
+public class SpotDTO {
     private int spotId;
     private String spotName;
     private int unlockPrice;
 
-    public Spot() {}
+    public SpotDTO() {}
 
-    public Spot(int spotId, String spotName, int unlockPrice) {
+    public SpotDTO(int spotId, String spotName, int unlockPrice) {
         this.spotId = spotId;
         this.spotName = spotName;
         this.unlockPrice = unlockPrice;

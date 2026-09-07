@@ -1,17 +1,17 @@
-package org.gotchafish.domain.spot;
+package org.gotchafish.spot.dto;
 
 import java.time.LocalDateTime;
 
-public class UserSpot {
+public class UserSpotDTO {
     private int userSpotId;
     private int userId;
     private int spotId;
     private LocalDateTime unlockDate;
 
-    public UserSpot() {
+    public UserSpotDTO() {
     }
 
-    public UserSpot(int userSpotId, int userId, int spotId, LocalDateTime unlockDate) {
+    public UserSpotDTO(int userSpotId, int userId, int spotId, LocalDateTime unlockDate) {
         this.userSpotId = userSpotId;
         this.userId = userId;
         this.spotId = spotId;
