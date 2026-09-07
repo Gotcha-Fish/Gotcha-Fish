@@ -1,4 +1,36 @@
 package org.gotchafish.common;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Properties;
+
 public class JDBCUtil {
+
+    // DB DRIVER 로드
+    static {
+        try {
+            Class.forName(JDBCManager.DRIVER_NAME);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    // DB 연결
+    public static Connection getConnection() throws SQLException {
+        Connection con = DriverManager.getConnection(
+                JDBCManager.URL,
+                JDBCManager.USER_ID,
+                JDBCManager.USER_PW
+        );
+        System.out.println("DB 연결 성공");
+        return con;
+    }
+
+    // DB 닫기
+
+
 }
