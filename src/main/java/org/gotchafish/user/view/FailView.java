@@ -1,7 +1,5 @@
 package org.gotchafish.user.view;
 
-import org.gotchafish.user.dto.UserDTO;
-
 public class FailView {
     // 회원가입 실패
     public static void signUpFail(String message) {

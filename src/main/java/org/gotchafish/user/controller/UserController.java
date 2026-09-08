@@ -11,6 +11,12 @@ import java.sql.SQLException;
 public class UserController {
     private final UserService userService = UserServiceImpl.getInstance();
 
+    private static final UserController userController = new UserController();
+
+    public static UserController getInstance() {
+        return userController;
+    }
+
     public void signUp(UserDTO user) {
         try {
             // 회원가입 서비스 실행

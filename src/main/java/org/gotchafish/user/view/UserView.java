@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class UserView {
     private final Scanner sc = new Scanner(System.in);
 
-    private final UserController controller = new UserController();
+    private final UserController controller = UserController.getInstance();
 
     public void signUp() {
         System.out.println();
