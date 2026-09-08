@@ -6,7 +6,6 @@ import org.gotchafish.user.dao.AttendanceDAO;
 import org.gotchafish.user.dao.AttendanceDAOImpl;
 import org.gotchafish.user.dao.UserDAO;
 import org.gotchafish.user.dao.UserDAOImpl;
-import org.gotchafish.user.dto.LoginResult;
 import org.gotchafish.user.util.DbManager;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -82,7 +81,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public LoginResult login(String loginId, String password) throws SQLException {
+    public UserDTO login(String loginId, String password) throws SQLException {
         Connection conn = null;
 
         try {
@@ -129,11 +128,13 @@ public class UserServiceImpl implements UserService {
 
             UserDTO userDTO = userDAO.findByUserId(conn, user.getUserId());
 
+            userDTO.setAttendanceRewarded(attendanceRewarded);
+
             // Session userID 저장
             Session.setUserId(userDTO.getUserId());
 
-            // 로그인 결과 LoginResult 객체 반환
-            return new LoginResult(userDTO, attendanceRewarded);
+            // 로그인 결과 UserDTO 반환
+            return userDTO;
         } catch (SQLException e) {
             // 작업 실패시 되돌리기
             if (conn != null) {

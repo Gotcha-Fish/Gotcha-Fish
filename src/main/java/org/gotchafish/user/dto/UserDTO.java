@@ -12,6 +12,8 @@ public class UserDTO {
     private LocalDateTime regDate;
     private LocalDateTime modDate;
 
+    private boolean attendanceRewarded;
+
     public UserDTO() {
     }
 
@@ -65,6 +67,10 @@ public class UserDTO {
         return modDate;
     }
 
+    public boolean isAttendanceRewarded() {
+        return attendanceRewarded;
+    }
+
     public void setUserId(Long userId) { this.userId = userId; }
 
     public void setLoginId(String loginId) { this.loginId = loginId; }
@@ -80,6 +86,8 @@ public class UserDTO {
     public void setRegDate(LocalDateTime regDate) { this.regDate = regDate; }
 
     public void setModDate(LocalDateTime modDate) { this.modDate = modDate; }
+
+    public void setAttendanceRewarded(boolean attendanceRewarded) { this.attendanceRewarded = attendanceRewarded;}
 
     @Override
     public String toString() {

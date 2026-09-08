@@ -1,7 +1,6 @@
 package org.gotchafish.user.controller;
 
 import org.gotchafish.user.dto.UserDTO;
-import org.gotchafish.user.dto.LoginResult;
 import org.gotchafish.user.service.UserService;
 import org.gotchafish.user.service.UserServiceImpl;
 import org.gotchafish.user.view.FailView;
@@ -15,10 +14,10 @@ public class UserController {
     public void signUp(UserDTO user) {
         try {
             // 회원가입 서비스 실행
-            UserDTO result = userService.signUp(user);
+            UserDTO userDTO = userService.signUp(user);
 
             // 회원가입 성공
-            SuccessView.signUpSuccess(result);
+            SuccessView.signUpSuccess(userDTO);
         } catch (RuntimeException e) {
             // 아이디/닉네임 중복,저장 실패 등의 예외
             FailView.signUpFail(e.getMessage());
@@ -30,12 +29,11 @@ public class UserController {
 
     public void login(String loginId, String password) {
         try {
-            LoginResult result = userService.login(loginId, password);
-            UserDTO user = result.getUser();
+            UserDTO userDTO = userService.login(loginId, password);
 
-            SuccessView.loginSuccess(user);
-            if (result.isAttendanceRewarded()) {
-                SuccessView.attendanceReward(user);
+            SuccessView.loginSuccess(userDTO);
+            if (userDTO.isAttendanceRewarded()) {
+                SuccessView.attendanceReward(userDTO);
             }
         } catch (RuntimeException e) {
             // 존재하지 않는 아이디, 비밀번호 오류 등의 예외
