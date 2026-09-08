@@ -1,7 +1,6 @@
 package org.gotchafish.user.service;
 
 import org.gotchafish.user.dto.UserDTO;
-import org.gotchafish.user.dto.LoginResult;
 
 import java.sql.SQLException;
 
@@ -25,14 +24,18 @@ public interface UserService {
      * 출석하지 않았다면 출석을 진행한다.
      * @param loginId 로그인 아이디
      * @param password 비밀번호
-     * @return 로그인한 회원 객체, 로그인 실패 시 null
+     * @return 로그인 성공시 회원 객체, 실패 시 null
+     * @throws RuntimeException 존재하지 않는 사용자, 비밀번호 불일치, 출석 실패
+     * @throws SQLException DB 처리 중 예외가 발생
      */
-    LoginResult login(String loginId, String password) throws SQLException;
+    UserDTO login(String loginId, String password) throws SQLException;
 
     /**
      * 회원 정보를 조회한다.
      * @param userId 조회할 회원의 ID
      * @return 회원 객체, 존재하지 않으면 null
+     * @throws RuntimeException 존재하지 않는 사용자
+     * @throws SQLException DB 처리 중 예외가 발생
      */
     UserDTO getUser(Long userId) throws SQLException;
 
@@ -44,6 +47,8 @@ public interface UserService {
      * @param nickname 변경할 닉네임
      * @param password 현재 비밀번호
      * @return 수정 성공시 true, 실패시 false
+     * @throws RuntimeException 존재하지 않는 사용자, 비밀번호 불일치, 닉네임 중복, 닉네임 변경 실패
+     * @throws SQLException DB 처리 중 예외가 발생
      */
     boolean updateNickname(Long userId, String nickname, String password) throws SQLException;
 
@@ -54,6 +59,8 @@ public interface UserService {
      * @param oldPassword 수정할 회원의 ID
      * @param newPassword 변경할 비밀번호
      * @return 수정 성공시 true, 실패시 false
+     * @throws RuntimeException 존재하지 않는 사용자, 비밀번호 불일치, 비밀번호 변경 실패
+     * @throws SQLException DB 처리 중 예외가 발생
      */
     boolean updatePassword(Long userId, String oldPassword, String newPassword)  throws SQLException;
 }
