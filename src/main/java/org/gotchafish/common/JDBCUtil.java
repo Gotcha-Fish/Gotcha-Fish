@@ -2,9 +2,7 @@ package org.gotchafish.common;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Properties;
 
 public class JDBCUtil {
@@ -29,8 +27,5 @@ public class JDBCUtil {
         System.out.println("DB 연결 성공");
         return con;
     }
-
-    // DB 닫기
-
 
 }
