@@ -7,7 +7,6 @@ import org.gotchafish.user.dto.Session;
 import org.gotchafish.user.view.UserView;
 
 import java.util.Scanner;
-import java.sql.SQLException;
 
 public class Main {
 

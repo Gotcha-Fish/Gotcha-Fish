@@ -3,42 +3,42 @@ package org.gotchafish.spot.dto;
 import java.time.LocalDateTime;
 
 public class UserSpotDTO {
-    private int userSpotId;
-    private int userId;
-    private int spotId;
+    private Long userSpotId;
+    private Long userId;
+    private Long spotId;
     private LocalDateTime unlockDate;
 
     public UserSpotDTO() {
     }
 
-    public UserSpotDTO(int userSpotId, int userId, int spotId, LocalDateTime unlockDate) {
+    public UserSpotDTO(Long userSpotId, Long userId, Long spotId, LocalDateTime unlockDate) {
         this.userSpotId = userSpotId;
         this.userId = userId;
         this.spotId = spotId;
         this.unlockDate = unlockDate;
     }
 
-    public int getUserSpotId() {
+    public Long getUserSpotId() {
         return userSpotId;
     }
 
-    public void setUserSpotId(int userSpotId) {
+    public void setUserSpotId(Long userSpotId) {
         this.userSpotId = userSpotId;
     }
 
-    public int getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public int getSpotId() {
+    public Long getSpotId() {
         return spotId;
     }
 
-    public void setSpotId(int spotId) {
+    public void setSpotId(Long spotId) {
         this.spotId = spotId;
     }
 

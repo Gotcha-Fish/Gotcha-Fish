@@ -1,23 +1,23 @@
 package org.gotchafish.spot.dto;
 
 public class SpotDTO {
-    private int spotId;
+    private Long spotId;
     private String spotName;
     private int unlockPrice;
 
     public SpotDTO() {}
 
-    public SpotDTO(int spotId, String spotName, int unlockPrice) {
+    public SpotDTO(Long spotId, String spotName, int unlockPrice) {
         this.spotId = spotId;
         this.spotName = spotName;
         this.unlockPrice = unlockPrice;
     }
 
-    public int getSpotId() {
+    public Long getSpotId() {
         return spotId;
     }
 
-    public void setSpotId(int spotId) {
+    public void setSpotId(Long spotId) {
         this.spotId = spotId;
     }
 

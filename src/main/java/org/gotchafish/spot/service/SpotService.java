@@ -24,7 +24,7 @@ public interface SpotService {
      * @return 잠금 해제 성공시 true
      * @throws SQLException DB 처리 중 예외가 발생한 경우
      */
-    boolean unlockSpot(Long userId, int spotId) throws SQLException;
+    boolean unlockSpot(Long userId, Long spotId) throws SQLException;
 
     /**
      * 낚시터 ID로 특정 낚시터의 상세 정보를 조회한다.
@@ -33,6 +33,6 @@ public interface SpotService {
      * @return 낚시터 정보 (이름, 잠금해제 가격 포함), 없으면 null
      * @throws SQLException DB 처리 중 예외가 발생한 경우
      */
-    SpotDTO getSpotById(int spotId) throws SQLException;
+    SpotDTO getSpotById(Long spotId) throws SQLException;
 
 }

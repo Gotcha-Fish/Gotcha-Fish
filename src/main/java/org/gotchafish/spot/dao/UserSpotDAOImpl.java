@@ -18,28 +18,28 @@ public class UserSpotDAOImpl implements UserSpotDAO {
     }
 
     @Override
-    public boolean insert(Connection conn, Long userId, int spotId) throws SQLException {
+    public boolean insert(Connection conn, Long userId, Long spotId) throws SQLException {
         String sql = """
             INSERT INTO tbl_user_spot (user_id, spot_id) VALUES (?, ?)
         """;
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setLong(1, userId);
-            ps.setInt(2, spotId);
+            ps.setLong(2, spotId);
 
             return ps.executeUpdate() > 0;
         }
     }
 
     @Override
-    public boolean existsByUserIdAndSpotId(Connection conn, Long userId, int spotId) throws SQLException {
+    public boolean existsByUserIdAndSpotId(Connection conn, Long userId, Long spotId) throws SQLException {
         String sql = """
             SELECT count(*) FROM tbl_user_spot
             WHERE user_id = ? AND spot_id = ?
         """;
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setLong(1, userId);
-            ps.setInt(2, spotId);
+            ps.setLong(2, spotId);
 
             try (ResultSet rs = ps.executeQuery()) {
                 while(rs.next()) {
@@ -51,19 +51,19 @@ public class UserSpotDAOImpl implements UserSpotDAO {
     }
 
     @Override
-    public List<Integer> findSpotIdsByUserId(Connection conn, Long userId) throws SQLException {
+    public List<Long> findSpotIdsByUserId(Connection conn, Long userId) throws SQLException {
         String sql = """
             SELECT spot_id FROM tbl_user_spot
             WHERE user_id = ?
         """;
-        List<Integer> spotIds = new ArrayList<>();
+        List<Long> spotIds = new ArrayList<>();
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setLong(1, userId);
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    int spotId = rs.getInt(1);
+                    Long spotId = rs.getLong(1);
                     spotIds.add(spotId);
                 }
             }

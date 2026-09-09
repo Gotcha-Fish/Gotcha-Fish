@@ -1,13 +1,16 @@
 package org.gotchafish.user.service;
 
+import org.gotchafish.common.JDBCUtil;
+import org.gotchafish.rod.dao.RodDAO;
+import org.gotchafish.rod.dao.RodDAOImpl;
+import org.gotchafish.spot.dao.UserSpotDAO;
+import org.gotchafish.spot.dao.UserSpotDAOImpl;
 import org.gotchafish.user.dto.Session;
 import org.gotchafish.user.dto.UserDTO;
 import org.gotchafish.user.dao.AttendanceDAO;
 import org.gotchafish.user.dao.AttendanceDAOImpl;
 import org.gotchafish.user.dao.UserDAO;
 import org.gotchafish.user.dao.UserDAOImpl;
-import org.gotchafish.user.dto.LoginResult;
-import org.gotchafish.user.util.DbManager;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.Connection;
@@ -16,6 +19,8 @@ import java.sql.SQLException;
 public class UserServiceImpl implements UserService {
     private final UserDAO userDAO = UserDAOImpl.getInstance();
     private final AttendanceDAO attendanceDAO = AttendanceDAOImpl.getInstance();
+    private final RodDAO rodDAO = RodDAOImpl.getInstance();
+    private final UserSpotDAO spotDAO = UserSpotDAOImpl.getInstance();
 
     private static final UserService instance = new UserServiceImpl();
 
@@ -29,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
         try {
             // 트랜잭션에 사용할 Connection 생성
-            conn = DbManager.getConnection();
+            conn = JDBCUtil.getConnection();
 
             // 자동 커밋 끄기
             conn.setAutoCommit(false);
@@ -54,12 +59,20 @@ public class UserServiceImpl implements UserService {
                 throw new RuntimeException("회원 정보 저장에 실패했습니다.");
             }
 
+            // 기본 낚시터 잠금 해제
+            if (!spotDAO.insert(conn, userId, 1L)) {
+                throw new RuntimeException("기본 낚시터 잠금 해제에 실패했습니다.");
+            }
+
             // 회원가입 보상 100G 지급
             if (!userDAO.updateGold(conn, userId, 100)) {
                 throw new RuntimeException("회원가입 보상 지급에 실패했습니다.");
             }
             
             // 회원가입 보상 기본 낚시대 10개 지급
+            if (!rodDAO.insertUserRod(conn, userId, 1L, 10)) {
+                throw new RuntimeException("회원가입 보상 지급에 실패했습니다.");
+            }
 
             // 모든 작업 성공
             conn.commit();
@@ -82,12 +95,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public LoginResult login(String loginId, String password) throws SQLException {
+    public UserDTO login(String loginId, String password) throws SQLException {
         Connection conn = null;
 
         try {
             // 트랜잭션에 사용할 Connection 생성
-            conn = DbManager.getConnection();
+            conn = JDBCUtil.getConnection();
 
             // 자동 커밋 끄기
             conn.setAutoCommit(false);
@@ -120,6 +133,9 @@ public class UserServiceImpl implements UserService {
                 }
 
                 // 출석 보상 기본 낚시대 1개 지급
+                if (!rodDAO.updateUserRodQuantity(conn, user.getUserId(), 1L, 1)) {
+                    throw new RuntimeException("출석 보상 지급에 실패했습니다.");
+                }
 
                 attendanceRewarded = true;
             }
@@ -129,11 +145,13 @@ public class UserServiceImpl implements UserService {
 
             UserDTO userDTO = userDAO.findByUserId(conn, user.getUserId());
 
+            userDTO.setAttendanceRewarded(attendanceRewarded);
+
             // Session userID 저장
             Session.setUserId(userDTO.getUserId());
 
-            // 로그인 결과 LoginResult 객체 반환
-            return new LoginResult(userDTO, attendanceRewarded);
+            // 로그인 결과 UserDTO 반환
+            return userDTO;
         } catch (SQLException e) {
             // 작업 실패시 되돌리기
             if (conn != null) {
@@ -152,7 +170,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO getUser(Long userId) throws SQLException {
         // Connection 생성
-        try (Connection conn = DbManager.getConnection()) {
+        try (Connection conn = JDBCUtil.getConnection()) {
 
             // 회원 정보 찾기
             UserDTO user = userDAO.findByUserId(conn, userId);
@@ -167,7 +185,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean updateNickname(Long userId, String nickname, String password) throws SQLException{
-        try (Connection conn = DbManager.getConnection()) {
+        try (Connection conn = JDBCUtil.getConnection()) {
 
             // 회원 정보 조회
             UserDTO user = userDAO.findByUserId(conn, userId);
@@ -197,7 +215,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean updatePassword(Long userId, String oldPassword, String newPassword) throws SQLException {
-        try (Connection conn = DbManager.getConnection()) {
+        try (Connection conn = JDBCUtil.getConnection()) {
             // 회원 정보 조회
             UserDTO user = userDAO.findByUserId(conn, userId);
 
