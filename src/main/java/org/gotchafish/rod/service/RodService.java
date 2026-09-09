@@ -49,4 +49,14 @@ public interface RodService {
      * @throws SQLException DB 처리 중 예외가 발생
      */
     boolean buyRod(Long userId, Long rodId, int quantity) throws SQLException;
+
+    /**
+     * 낚시에 사용한 낚싯대의 수량을 1개 차감한다.
+     * @param userId 낚싯대를 사용하는 회원의 ID
+     * @param rodId 사용하는 낚싯대의 ID
+     * @return 차감 성공시 true, 실패시 false
+     * @throws RuntimeException 존재하지 않는 낚시대/사용자, 수량 부족, 사용 실패
+     * @throws SQLException DB 처리 중 예외가 발생
+     */
+    boolean useRod(Long userId, Long rodId) throws SQLException;
 }

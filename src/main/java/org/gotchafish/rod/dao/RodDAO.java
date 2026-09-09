@@ -37,6 +37,16 @@ public interface RodDAO {
     RodDTO findByRodId(Connection conn, Long rodId) throws SQLException;
 
     /**
+     * 사용자가 보유한 특정 낚시대의 수량을 조회한다.
+     * @param conn DB 연결 객체
+     * @param userId 낚시대를 조회할 회원의 ID
+     * @param rodId 조회할 낚시대의 ID
+     * @return 사용자가 보유한 낚시대 수, 없으면 0 반환
+     * @throws SQLException DB 처리 중 예외가 발생
+     */
+    int findUserRodQuantity(Connection conn, Long userId, Long rodId) throws SQLException;
+
+    /**
      * 사용자가 해당 낚시대를 보유한 이력이 있는지 확인한다.
      * @param conn DB 연결 객체
      * @param userId 회원의 ID

@@ -115,6 +115,29 @@ public class RodDAOImpl implements RodDAO {
     }
 
     @Override
+    public int findUserRodQuantity(Connection conn, Long userId, Long rodId) throws SQLException {
+        String sql = """
+            SELECT quantity
+            FROM tbl_user_rod
+            WHERE user_id = ?
+              AND rod_id = ?
+        """;
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, userId);
+            stmt.setLong(2, rodId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("quantity");
+                }
+            }
+        }
+
+        return 0;
+    }
+
+    @Override
     public boolean existsUserRod(Connection conn, Long userId, Long rodId) throws SQLException {
         String sql = """
             SELECT COUNT(*)
