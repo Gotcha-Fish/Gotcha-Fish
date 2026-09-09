@@ -24,14 +24,13 @@ public class SuccessView {
     public static void attendanceReward(UserDTO user) {
         System.out.println();
         System.out.println("[ 오늘의 출석 보상 ]");
-        System.out.println("출석 보상 " + 10 + "G를 획득했습니다!");
+        System.out.println("🎁 출석 보상 " + 10 + "G를 획득했습니다!");
         System.out.println();
         System.out.println("현재 골드 : " + user.getGold() + "G");
     }
 
     // 프로필 조회 성공
     public static void profileSuccess(UserDTO user) {
-        System.out.println();
         System.out.println("👤 닉네임");
         System.out.println("   " + user.getNickname());
 
