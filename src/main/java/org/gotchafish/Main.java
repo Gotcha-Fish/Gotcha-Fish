@@ -1,26 +1,17 @@
 package org.gotchafish;
 
-<<<<<<< Updated upstream
-import org.gotchafish.common.JDBCUtil;
-=======
 import org.gotchafish.fish.view.FishView;
 import org.gotchafish.rod.view.RodView;
 import org.gotchafish.spot.view.SpotView;
 import org.gotchafish.user.dto.Session;
 import org.gotchafish.user.view.UserView;
->>>>>>> Stashed changes
 
+import java.util.Scanner;
 import java.sql.SQLException;
 
 public class Main {
+
     public static void main(String[] args) {
-<<<<<<< Updated upstream
-        try {
-            JDBCUtil.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-=======
         Scanner sc = new Scanner(System.in);
 
         UserView userView = new UserView();
@@ -121,7 +112,6 @@ public class Main {
                         System.out.println("잘못된 입력입니다.");
                 }
             }
->>>>>>> Stashed changes
         }
     }
 }
