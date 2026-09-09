@@ -5,6 +5,8 @@ public class SpotDTO {
     private String spotName;
     private int unlockPrice;
 
+    private boolean unlocked;
+
     public SpotDTO() {}
 
     public SpotDTO(Long spotId, String spotName, int unlockPrice) {
@@ -35,6 +37,14 @@ public class SpotDTO {
 
     public void setUnlockPrice(int unlockPrice) {
         this.unlockPrice = unlockPrice;
+    }
+
+    public boolean isUnlocked() {
+        return unlocked;
+    }
+
+    public void setUnlocked(boolean unlocked) {
+        this.unlocked = unlocked;
     }
 
     @Override

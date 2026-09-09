@@ -27,9 +27,18 @@ public class SpotServiceImpl implements SpotService {
     }
 
     @Override
-    public List<SpotDTO> getSpotList() throws SQLException {
+    public List<SpotDTO> getSpotList(Long userId) throws SQLException {
         try (Connection conn = JDBCUtil.getConnection()) {
-            return spotDAO.findAll(conn);
+            List<SpotDTO> spots = spotDAO.findAll(conn);
+
+            List<Long> unlockedSpotIds = userSpotDAO.findSpotIdsByUserId(conn, userId);
+            for (SpotDTO spot : spots) {
+                if (unlockedSpotIds.contains(spot.getSpotId())) {
+                    spot.setUnlocked(true);
+                }
+            }
+
+            return spots;
         } catch (Exception e) {
             throw new RuntimeException("낚시터 조회에 실패했습니다.");
         }
