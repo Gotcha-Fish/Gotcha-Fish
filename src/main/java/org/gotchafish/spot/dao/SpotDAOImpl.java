@@ -32,7 +32,7 @@ public class SpotDAOImpl implements SpotDAO {
         try (PreparedStatement ps = conn.prepareStatement(sql)){
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    int spotId = rs.getInt(1);
+                    Long spotId = rs.getLong(1);
                     String spotName = rs.getString(2);
                     int unlockPrice = rs.getInt(3);
 
@@ -48,7 +48,7 @@ public class SpotDAOImpl implements SpotDAO {
     }
 
     @Override
-    public SpotDTO findById(Connection conn, int spotId) throws SQLException {
+    public SpotDTO findById(Connection conn, Long spotId) throws SQLException {
 
         String sql = """
             SELECT * FROM tbl_spot
@@ -57,12 +57,12 @@ public class SpotDAOImpl implements SpotDAO {
         SpotDTO spotDTO = null;
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, spotId);
+            ps.setLong(1, spotId);
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     spotDTO = new SpotDTO(
-                            rs.getInt(1),
+                            rs.getLong(1),
                             rs.getString(2),
                             rs.getInt(3)
                     );

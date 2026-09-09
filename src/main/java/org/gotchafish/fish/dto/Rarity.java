@@ -1,4 +1,5 @@
 package org.gotchafish.fish.dto;
 
-public class Rarity {
+public enum Rarity {
+    NORMAL, SPECIAL, RARE, EPIC, LEGEND
 }
