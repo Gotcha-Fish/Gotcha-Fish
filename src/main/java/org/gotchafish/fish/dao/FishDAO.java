@@ -86,4 +86,18 @@ public interface FishDAO {
      * @throws SQLException DB 처리 중 예외가 발생한 경우
      */
     List<FishDTO> findBySpotId(Connection conn, Long spotId) throws SQLException;
+
+    /**
+     * 사용자가 보유한 특정 물고기의 수량을 조회한다.
+     * <p>
+     * "물고기 판매" 시, 판매하려는 수량만큼 실제로 보유하고 있는지 확인할
+     때 사용된다.
+     *
+     * @param conn DB 연결 객체
+     * @param userId 회원의 ID
+     * @param fishId 물고기의 ID
+     * @return 보유 수량 (보유 이력이 없으면 0)
+     * @throws SQLException DB 처리 중 예외가 발생한 경우
+     */
+    int findUserFishQuantity(Connection conn, Long userId, Long fishId) throws SQLException;
 }
