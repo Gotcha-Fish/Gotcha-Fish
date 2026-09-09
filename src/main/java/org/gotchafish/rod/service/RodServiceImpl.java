@@ -1,5 +1,6 @@
 package org.gotchafish.rod.service;
 
+import org.gotchafish.common.JDBCUtil;
 import org.gotchafish.rod.dao.RodDAO;
 import org.gotchafish.rod.dao.RodDAOImpl;
 import org.gotchafish.rod.dto.RodDTO;
@@ -24,7 +25,7 @@ public class RodServiceImpl implements RodService {
     @Override
     public List<RodDTO> getRodShop(Long userId) throws SQLException {
         // DB 연결 생성 및 자동 반납
-        try (Connection conn = DbManager.getConnection()) {
+        try (Connection conn = JDBCUtil.getConnection()) {
             // 낚시대 상점의 전체 낚시대 목록 조회
             List<RodDTO> rods = rodDAO.findAllWithQuantity(conn, userId);
 
@@ -39,7 +40,7 @@ public class RodServiceImpl implements RodService {
     @Override
     public List<RodDTO> getMyRods(Long userId) throws SQLException {
         // DB 연결 생성 및 자동 반납
-        try (Connection conn = DbManager.getConnection()) {
+        try (Connection conn = JDBCUtil.getConnection()) {
             // 사용자가 보유한 낚시대 목록 조회
             List<RodDTO> rods = rodDAO.findRodsByUserId(conn, userId);
 
@@ -54,7 +55,7 @@ public class RodServiceImpl implements RodService {
     @Override
     public RodDTO getRod(Long rodId) throws SQLException {
         // DB 연결 생성 및 자동 반납
-        try (Connection conn = DbManager.getConnection()) {
+        try (Connection conn = JDBCUtil.getConnection()) {
             // 사용자가 보유한 낚시대 목록 조회
             RodDTO rod = rodDAO.findByRodId(conn, rodId);
 
@@ -72,7 +73,7 @@ public class RodServiceImpl implements RodService {
 
         try {
             // 트랜잭션에 사용할 Connection 생성
-            conn = DbManager.getConnection();
+            conn = JDBCUtil.getConnection();
 
             // 자동 커밋 끄기
             conn.setAutoCommit(false);
@@ -143,7 +144,7 @@ public class RodServiceImpl implements RodService {
 
         try {
             // 트랜잭션에 사용할 Connection 생성
-            conn = DbManager.getConnection();
+            conn = JDBCUtil.getConnection();
 
             // 자동 커밋 끄기
             conn.setAutoCommit(false);
