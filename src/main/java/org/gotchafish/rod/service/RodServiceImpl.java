@@ -136,4 +136,59 @@ public class RodServiceImpl implements RodService {
             }
         }
     }
+
+    @Override
+    public boolean useRod(Long userId, Long rodId) throws SQLException {
+        Connection conn = null;
+
+        try {
+            // 트랜잭션에 사용할 Connection 생성
+            conn = DbManager.getConnection();
+
+            // 자동 커밋 끄기
+            conn.setAutoCommit(false);
+
+            // 사용자 정보 조회
+            UserDTO user = userDAO.findByUserId(conn, userId);
+
+            if (user == null) {
+                throw new RuntimeException("존재하지 않는 회원입니다.");
+            }
+
+            // 사용할 낚시대 정보 조회
+            RodDTO rod = rodDAO.findByRodId(conn, rodId);
+
+            if (rod == null) {
+                throw new RuntimeException("존재하지 않는 낚시대입니다.");
+            }
+
+            int quantity = rodDAO.findUserRodQuantity(conn, userId, rodId);
+
+            if (quantity <= 0) {
+                throw new RuntimeException("해당 낚시대 보유 수량이 0입니다.");
+            }
+
+            //실제로 사용하기
+            if (!rodDAO.updateUserRodQuantity(conn, userId, rodId, -1)) {
+                throw new RuntimeException("낚시대 사용에 실패했습니다.");
+            }
+
+            // 모든 작업 성공
+            conn.commit();
+
+            return true;
+        } catch (Exception e) {
+            // 작업 실패시 되돌리기
+            if (conn != null) {
+                conn.rollback();
+            }
+            throw e;
+        } finally {
+            if (conn != null) {
+                // Connection 반환 및 자동 커밋 되돌리기
+                conn.setAutoCommit(true);
+                conn.close();
+            }
+        }
+    }
 }

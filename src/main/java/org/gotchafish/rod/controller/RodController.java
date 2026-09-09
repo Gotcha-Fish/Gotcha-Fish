@@ -55,4 +55,36 @@ public class RodController {
             FailView.rodBuyFail(e.getMessage());
         }
     }
+
+    public boolean getMyRodSInfo(Long userId) {
+        try {
+            List<RodDTO> rodList = rodService.getMyRods(userId);
+
+            // 조회 성공
+            SuccessView.MyRodsInfoSuccess(rodList);
+            return true;
+        } catch (RuntimeException e) {
+            // 조회 실패
+            FailView.myRodsInfoFail(e.getMessage());
+        } catch (SQLException e) {
+            // DB 오류
+            FailView.myRodsInfoFail(e.getMessage());
+        }
+        return false;
+    }
+
+    public void useRod(Long userId, Long rodId) {
+        try {
+            if(rodService.useRod(userId, rodId)) {
+                // 사용 성공
+                SuccessView.rodUseSuccess(rodService.getRod(rodId));
+            }
+        } catch (RuntimeException e) {
+            // 사용 실패
+            FailView.rodUseFail(e.getMessage());
+        } catch (SQLException e) {
+            // DB 오류
+            FailView.rodUseFail(e.getMessage());
+        }
+    }
 }

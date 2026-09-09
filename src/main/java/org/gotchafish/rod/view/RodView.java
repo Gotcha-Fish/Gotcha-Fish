@@ -36,4 +36,13 @@ public class RodView {
 
         rodController.buyRod(Session.getUserId(), (long) choice, quantity);
     }
+
+    public void useRod() {
+        if(!rodController.getMyRodSInfo(Session.getUserId())) return;
+
+        System.out.print("선택 : ");
+        int choice = sc.nextInt();
+
+        rodController.useRod(Session.getUserId(), (long) choice);
+    }
 }

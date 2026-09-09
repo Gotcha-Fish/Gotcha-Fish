@@ -30,4 +30,23 @@ public class SuccessView {
         System.out.println();
         System.out.println("-" + rod.getPrice() * quantity + "G");
     }
+
+    // 내 낚시대 조회 성공
+    public static void MyRodsInfoSuccess(List<RodDTO> rodList) {
+        System.out.println();
+        System.out.println("[ 낚시대 선택 ]");
+        System.out.println();
+
+        for (RodDTO rod : rodList) {
+            System.out.println(rod.getRodId() + ". " + rod.getRodName() + " X " + rod.getQuantity());
+            System.out.println("   포획 확률 : " + rod.getCatchProbability() + "%");
+            System.out.println();
+        }
+    }
+
+    // 낚시대 사용 성공
+    public static void rodUseSuccess(RodDTO rod) {
+        System.out.println();
+        System.out.println("🎣 " + rod.getRodName() + "를 사용합니다.");
+    }
 }
