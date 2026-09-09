@@ -35,7 +35,7 @@ public class FishServiceImpl implements FishService {
     }
 
     @Override
-    public boolean sellFish(Long userId, Long fishId, int quantity) throws SQLException {
+    public FishDTO sellFish(Long userId, Long fishId, int quantity) throws SQLException {
         Connection conn = null;
 
         try {
@@ -63,7 +63,7 @@ public class FishServiceImpl implements FishService {
                 throw new RuntimeException("골드 지급에 실패했습니다.");
 
             conn.commit();
-            return true;
+            return fish;
 
         } catch (Exception e) {
             if (conn != null) conn.rollback();
