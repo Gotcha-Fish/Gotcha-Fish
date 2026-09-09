@@ -1,6 +1,8 @@
 package org.gotchafish;
 
+import org.gotchafish.fish.view.FishView;
 import org.gotchafish.rod.view.RodView;
+import org.gotchafish.spot.view.SpotView;
 import org.gotchafish.user.dto.Session;
 import org.gotchafish.user.view.UserView;
 
@@ -13,6 +15,8 @@ public class Main {
 
         UserView userView = new UserView();
         RodView rodView = new RodView();
+        FishView fishView = new FishView();
+        SpotView spotView = new SpotView();
 
         // 프로그램 전체 반복
         while (true) {
@@ -74,6 +78,7 @@ public class Main {
                         break;
                     case "2":
                         // 물고기 판매
+                        fishView.sellFish();
                         break;
                     case "3":
                         // 낚시대 구입
@@ -81,6 +86,7 @@ public class Main {
                         break;
                     case "4":
                         // 낚시터 상점
+                        spotView.unlockSpot();
                         break;
                     case "5":
                         // 물고기 도감

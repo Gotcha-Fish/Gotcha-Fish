@@ -14,12 +14,10 @@ public class SuccessView {
         System.out.println("[ 낚시터 목록 ]");
         System.out.println();
 
-        int number = 1;
         for (SpotDTO spot : spots) {
-            System.out.println(number + ". " + spot.getSpotName());
+            System.out.println(spot.getSpotId() + ". " + spot.getSpotName());
             System.out.println("   가격 : " + spot.getUnlockPrice() + "G");
             System.out.println();
-            number++;
         }
     }
 
