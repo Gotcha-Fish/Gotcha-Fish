@@ -36,7 +36,7 @@ public class SpotServiceImpl implements SpotService {
     }
 
     @Override
-    public boolean unlockSpot(Long userId, int spotId) throws SQLException {
+    public boolean unlockSpot(Long userId, Long spotId) throws SQLException {
         Connection conn = null;
 
         try {
@@ -77,7 +77,7 @@ public class SpotServiceImpl implements SpotService {
     }
 
     @Override
-    public SpotDTO getSpotById(int spotId) throws SQLException {
+    public SpotDTO getSpotById(Long spotId) throws SQLException {
         try (Connection conn = JDBCUtil.getConnection()) {
             return spotDAO.findById(conn, spotId);
         }

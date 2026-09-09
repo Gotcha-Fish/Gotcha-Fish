@@ -30,7 +30,7 @@ public interface SpotDAO {
      * @return 해당 ID를 가진 낚시터 정보 (없으면 null)
      * @throws SQLException DB 처리 중 예외가 발생한 경우
      */
-    SpotDTO findById(Connection conn, int spotId) throws SQLException;
+    SpotDTO findById(Connection conn, Long spotId) throws SQLException;
 
 
 }

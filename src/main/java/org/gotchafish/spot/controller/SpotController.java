@@ -25,7 +25,7 @@ public class SpotController {
         }
     }
 
-    public void unlockSpot(Long userId, int spotId) {
+    public void unlockSpot(Long userId, Long spotId) {
         try {
             SpotDTO spot = spotService.getSpotById(spotId);
             boolean result = spotService.unlockSpot(userId, spotId);
