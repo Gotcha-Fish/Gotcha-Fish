@@ -52,7 +52,22 @@ public class RodServiceImpl implements RodService {
     }
 
     @Override
-    public void buyRod(Long userId, Long rodId, int quantity) throws SQLException {
+    public RodDTO getRod(Long rodId) throws SQLException {
+        // DB 연결 생성 및 자동 반납
+        try (Connection conn = DbManager.getConnection()) {
+            // 사용자가 보유한 낚시대 목록 조회
+            RodDTO rod = rodDAO.findByRodId(conn, rodId);
+
+            if (rod == null) {
+                throw new RuntimeException("존재하지 않는 낚시대입니다.");
+            }
+
+            return rod;
+        }
+    }
+
+    @Override
+    public boolean buyRod(Long userId, Long rodId, int quantity) throws SQLException {
         Connection conn = null;
 
         try {
@@ -105,6 +120,8 @@ public class RodServiceImpl implements RodService {
 
             // 모든 작업 성공
             conn.commit();
+
+            return true;
         } catch (Exception e) {
             // 작업 실패시 되돌리기
             if (conn != null) {
