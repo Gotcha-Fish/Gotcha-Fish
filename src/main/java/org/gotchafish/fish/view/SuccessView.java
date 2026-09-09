@@ -14,11 +14,11 @@ public class SuccessView {
             System.out.println(fish.getFishId() + ". " + fish.getFishName() + " x " + fish.getQuantity());
             System.out.println("   희귀도 : " + fish.getRarity());
             System.out.println("   판매가 : " + fish.getPrice() + "G");
-            System.out
+            System.out.println();
         }
     }
 
-    // 물고기 판매 성
+    // 물고기 판매 성공
     public static void fishSellSuccess(FishDTO fish, int quantity) {
         System.out.println();
         System.out.println(fish.getFishName() + "를 판매했습니다!");
