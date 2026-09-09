@@ -7,12 +7,15 @@ import java.util.List;
 
 public interface SpotService {
     /**
-     * 등록된 낚시터 전체 목록을 조회한다
+     * 등록된 낚시터 전체 목록을 조회한다.
+     * 사용자가 잠금 해제한 낚시터는 해제상태로,
+     * 그렇지 않은 낚시터는 잠금상태로 조회한다.
      *
+     * @param userId 사용자가 잠금 해제한 낚시터를 조회할 회원의 ID
      * @return 낚시터 목록
      * @throws SQLException DB 처리 중 예외가 발생한 경우
      */
-    List<SpotDTO> getSpotList() throws SQLException;
+    List<SpotDTO> getSpotList(Long userId) throws SQLException;
 
     /**
      * 특정 낚시터의 잠금을 해제한다.

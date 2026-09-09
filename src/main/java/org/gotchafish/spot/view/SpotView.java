@@ -17,7 +17,7 @@ public class SpotView {
         System.out.println("================================");
         System.out.println();
 
-        spotController.spotList();
+        spotController.spotList(Session.getUserId());
 
         System.out.println("0. 뒤로가기");
         System.out.println();
