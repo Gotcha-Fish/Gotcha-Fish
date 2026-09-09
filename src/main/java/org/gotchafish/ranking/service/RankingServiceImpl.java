@@ -7,7 +7,6 @@ import org.gotchafish.ranking.dto.RankingDTO;
 import org.gotchafish.user.dao.UserDAO;
 import org.gotchafish.user.dao.UserDAOImpl;
 import org.gotchafish.user.dto.UserDTO;
-import org.gotchafish.user.util.DbManager;
 
 import java.sql.Connection;
 import java.sql.SQLException;

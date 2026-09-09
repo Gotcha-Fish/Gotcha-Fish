@@ -1,7 +1,5 @@
 package org.gotchafish.user.service;
 
-import com.mysql.cj.jdbc.JdbcConnection;
-import org.gotchafish.common.JDBCManager;
 import org.gotchafish.common.JDBCUtil;
 import org.gotchafish.rod.dao.RodDAO;
 import org.gotchafish.rod.dao.RodDAOImpl;
@@ -13,7 +11,6 @@ import org.gotchafish.user.dao.AttendanceDAO;
 import org.gotchafish.user.dao.AttendanceDAOImpl;
 import org.gotchafish.user.dao.UserDAO;
 import org.gotchafish.user.dao.UserDAOImpl;
-import org.gotchafish.user.util.DbManager;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.Connection;
