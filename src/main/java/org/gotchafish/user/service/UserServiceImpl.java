@@ -1,5 +1,7 @@
 package org.gotchafish.user.service;
 
+import org.gotchafish.rod.dao.RodDAO;
+import org.gotchafish.rod.dao.RodDAOImpl;
 import org.gotchafish.user.dto.Session;
 import org.gotchafish.user.dto.UserDTO;
 import org.gotchafish.user.dao.AttendanceDAO;
@@ -15,6 +17,7 @@ import java.sql.SQLException;
 public class UserServiceImpl implements UserService {
     private final UserDAO userDAO = UserDAOImpl.getInstance();
     private final AttendanceDAO attendanceDAO = AttendanceDAOImpl.getInstance();
+    private final RodDAO rodDAO = RodDAOImpl.getInstance();
 
     private static final UserService instance = new UserServiceImpl();
 
@@ -59,6 +62,9 @@ public class UserServiceImpl implements UserService {
             }
             
             // 회원가입 보상 기본 낚시대 10개 지급
+            if (!rodDAO.insertUserRod(conn, userId, 1L, 10)) {
+                throw new RuntimeException("회원가입 보상 지급에 실패했습니다.");
+            }
 
             // 모든 작업 성공
             conn.commit();
@@ -115,6 +121,11 @@ public class UserServiceImpl implements UserService {
 
                 // 출석 보상 10G 지급
                 if (!userDAO.updateGold(conn, user.getUserId(), 10)) {
+                    throw new RuntimeException("출석 보상 지급에 실패했습니다.");
+                }
+
+                // 출석 보상 기본 낚시대 1개 지급
+                if (!rodDAO.insertUserRod(conn, user.getUserId(), 1L, 1)) {
                     throw new RuntimeException("출석 보상 지급에 실패했습니다.");
                 }
 
