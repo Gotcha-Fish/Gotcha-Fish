@@ -133,11 +133,9 @@ public class UserServiceImpl implements UserService {
                 }
 
                 // 출석 보상 기본 낚시대 1개 지급
-                if (!rodDAO.insertUserRod(conn, user.getUserId(), 1L, 1)) {
+                if (!rodDAO.updateUserRodQuantity(conn, user.getUserId(), 1L, 1)) {
                     throw new RuntimeException("출석 보상 지급에 실패했습니다.");
                 }
-
-                // 출석 보상 기본 낚시대 1개 지급
 
                 attendanceRewarded = true;
             }
