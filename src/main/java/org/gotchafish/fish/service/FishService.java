@@ -25,9 +25,9 @@ public interface FishService {
      * @param userId 물고기를 판매하는 회원의 ID
      * @param fishId 판매할 물고기의 ID
      * @param quantity 판매할 물고기의 수량
-     * @return 판매 성공시 true, 판매 실패시 false
+     * @return 판매된 물고기 정보
      * @throws RuntimeException 존재하지 않는 물고기/사용자, 수량 부족, 판매 실패
      * @throws SQLException DB 처리 중 예외가 발생
      */
-    boolean sellFish(Long userId, Long fishId, int quantity) throws SQLException;
+    FishDTO sellFish(Long userId, Long fishId, int quantity) throws SQLException;
 }

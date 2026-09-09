@@ -2,8 +2,6 @@ package org.gotchafish.fish.dao;
 
 import org.gotchafish.fish.dto.FishDTO;
 import org.gotchafish.fish.dto.Rarity;
-import org.gotchafish.rod.dao.RodDAO;
-import org.gotchafish.rod.dao.RodDAOImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -162,5 +160,26 @@ public class FishDAOImpl implements FishDAO {
                 return fishList;
             }
         }
+    }
+
+    @Override
+    public int findUserFishQuantity(Connection conn, Long userId, Long fishId) throws SQLException {
+        String sql = """
+            SELECT quantity
+            FROM tbl_user_fish
+            WHERE user_id = ?
+            AND fish_id = ?
+        """;
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setLong(1, userId);
+            ps.setLong(2, fishId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getInt("quantity");
+            }
+        }
+
+        return 0;
     }
 }
