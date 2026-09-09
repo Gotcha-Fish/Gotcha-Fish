@@ -2,6 +2,8 @@ package org.gotchafish.fish.dao;
 
 import org.gotchafish.fish.dto.FishDTO;
 import org.gotchafish.fish.dto.Rarity;
+import org.gotchafish.rod.dao.RodDAO;
+import org.gotchafish.rod.dao.RodDAOImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FishDAOImpl implements FishDAO {
+    private static final FishDAO instance = new FishDAOImpl();
+
+    public static FishDAO getInstance() {
+        return instance;
+    }
+
 
     @Override
     public List<FishDTO> findFishByUserId(Connection conn, Long userId) throws SQLException {
