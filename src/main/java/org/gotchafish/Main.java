@@ -1,6 +1,7 @@
 package org.gotchafish;
 
 import org.gotchafish.fish.view.FishView;
+import org.gotchafish.ranking.view.RankingView;
 import org.gotchafish.rod.view.RodView;
 import org.gotchafish.spot.view.SpotView;
 import org.gotchafish.user.dto.Session;
@@ -17,6 +18,7 @@ public class Main {
         RodView rodView = new RodView();
         FishView fishView = new FishView();
         SpotView spotView = new SpotView();
+        RankingView rankingView = new RankingView();
 
         // 프로그램 전체 반복
         while (true) {
@@ -93,6 +95,7 @@ public class Main {
                         break;
                     case "6":
                         // 랭킹
+                        rankingView.showRankingMenu();
                         break;
                     case "7":
                         // 내 정보

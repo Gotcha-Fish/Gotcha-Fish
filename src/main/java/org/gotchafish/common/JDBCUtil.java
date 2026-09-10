@@ -21,8 +21,7 @@ public class JDBCUtil {
                 JDBCManager.USER_ID,
                 JDBCManager.USER_PW
         );
-        System.out.println("DB 연결 성공");
+        //System.out.println("DB 연결 성공");
         return con;
     }
-
 }
