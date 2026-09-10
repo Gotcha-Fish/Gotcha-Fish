@@ -44,4 +44,16 @@ public class SpotController {
             FailView.spotFailView("낚시터 잠금 해제 중 오류가 발생했습니다.");
         }
     }
+
+    public void selectSpot(Long userId) {
+        try {
+            List<SpotDTO> spots = spotService.getSpotList(userId);
+            SuccessView.selectSpotView(spots);
+        } catch (RuntimeException e) {
+            FailView.spotFailView(e.getMessage());
+        } catch (SQLException e) {
+            FailView.spotFailView("낚시터 조회에 실패했습니다.");
+        }
+
+    }
 }
