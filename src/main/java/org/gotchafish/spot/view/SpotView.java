@@ -33,4 +33,14 @@ public class SpotView {
         spotController.unlockSpot(Session.getUserId(), (long) choice);
     }
 
+    public Long selectSpot(Long userId) {
+        spotController.selectSpot(userId);
+
+        System.out.print("낚시터 선택 : ");
+        int choice = sc.nextInt();
+        sc.nextLine();
+
+        return (long) choice;
+    }
+
 }

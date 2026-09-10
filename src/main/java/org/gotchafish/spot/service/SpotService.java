@@ -38,4 +38,14 @@ public interface SpotService {
      */
     SpotDTO getSpotById(Long spotId) throws SQLException;
 
+    /**
+     * 사용자가 잠금 해제한 낚시터 목록만 조회한다.
+     * <p>
+     * "낚시하기" 메뉴에서 낚시할 장소를 선택할 때 사용된다.
+     *
+     * @param userId 조회할 회원의 ID
+     * @return 잠금 해제된 낚시터 목록
+     * @throws SQLException DB 처리 중 예외가 발생한 경우
+     */
+    List<SpotDTO> getUnlockedSpots(Long userId) throws SQLException;
 }

@@ -11,6 +11,7 @@ import org.gotchafish.user.dao.UserDAOImpl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SpotServiceImpl implements SpotService {
@@ -90,5 +91,24 @@ public class SpotServiceImpl implements SpotService {
         try (Connection conn = JDBCUtil.getConnection()) {
             return spotDAO.findById(conn, spotId);
         }
+    }
+
+    @Override
+    public List<SpotDTO> getUnlockedSpots(Long userId) throws SQLException {
+        try (Connection conn = JDBCUtil.getConnection()) {
+
+            List<SpotDTO> allSpots = spotDAO.findAll(conn);
+            List<Long> unlockedSpotIds = userSpotDAO.findSpotIdsByUserId(conn, userId);
+            List<SpotDTO> unlockedSpots = new ArrayList<>();
+
+            for (SpotDTO spot : allSpots) {
+                if (unlockedSpotIds.contains(spot.getSpotId())) {
+                    unlockedSpots.add(spot);
+                }
+            }
+            return unlockedSpots;
+
+        }
+
     }
 }

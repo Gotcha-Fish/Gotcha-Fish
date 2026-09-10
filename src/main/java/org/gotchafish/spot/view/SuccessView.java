@@ -33,4 +33,16 @@ public class SuccessView {
         System.out.println();
         System.out.println("-" + unlockPrice + "G");
     }
+
+    public static void selectSpotView(List<SpotDTO> spots) {
+        System.out.println();
+        System.out.println("[ 낚시터 선택 ]");
+        System.out.println();
+
+        for (SpotDTO spot : spots) {
+            String status = spot.isUnlocked() ? "🔓" : "🔒";
+            System.out.println(spot.getSpotId() + ". " + spot.getSpotName() + " (상태 : " + status + ")");
+        }
+        System.out.println();
+    }
 }
