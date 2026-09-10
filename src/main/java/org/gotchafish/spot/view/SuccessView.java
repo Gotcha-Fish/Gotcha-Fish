@@ -8,10 +8,6 @@ import java.util.List;
 public class SuccessView {
     // 낚시터 조회 성공
     public static void spotSuccessView(UserDTO user, List<SpotDTO> spots) {
-        System.out.println("================================");
-        System.out.println("          낚시터 상점");
-        System.out.println("================================");
-        System.out.println();
         System.out.println("보유 골드 : " + user.getGold() + "G");
         System.out.println();
         System.out.println("[ 낚시터 목록 ]");
