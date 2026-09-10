@@ -29,7 +29,7 @@ public class RaidView {
                 createRoom(userId);
                 break;
             case 2:
-                joinRoom(userId);
+                findRooms(userId);
                 break;
             case 0:
                 return;
@@ -45,17 +45,34 @@ public class RaidView {
         System.out.println("================================");
         System.out.println();
 
-        raidController.createRoom(userId);
+        System.out.print("방 이름 : ");
+        scanner.nextLine();
+        String roomName = scanner.nextLine();
+        System.out.println();
+
+        raidController.createRoom(userId, roomName);
     }
 
-    public void joinRoom(Long userId) {
+    public void findRooms(Long userId) {
         System.out.println();
         System.out.println("================================");
         System.out.println("          대결 방 목록");
         System.out.println("================================");
         System.out.println();
 
-        raidController.joinRoom(userId);
+        if (raidController.findRooms(userId)) {
+            joinRoom(userId);
+        };
+    }
+
+    public void joinRoom(Long userId) {
+        System.out.println();
+        System.out.print("입장할 방 번호 : ");
+
+        Long roomId = scanner.nextLong();
+        System.out.println();
+
+        raidController.joinRoom(userId, roomId);
     }
 
     public static void main(String[] args) {

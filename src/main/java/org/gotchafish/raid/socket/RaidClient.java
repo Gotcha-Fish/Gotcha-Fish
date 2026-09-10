@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class RaidClient {
     private static final String HOST = "localhost";
@@ -22,7 +23,7 @@ public class RaidClient {
 
     public Long getUserId() { return userId; }
 
-    public void createRoom() throws IOException {
+    public void createRoom(String roomName) throws IOException {
         try (
                 // 서버에 연결하는 Socket 생성
                 Socket socket = new Socket(HOST, PORT);
@@ -39,8 +40,11 @@ public class RaidClient {
             // 방 생성 요청
             writer.println("CREATE_ROOM");
 
+            // 생성할 방 이름 전달
+            writer.println(roomName);
+
             // 서버가 보내는 모든 메시지 수신
-            startMessageListener(reader);
+            startMessageListener(reader, writer);
         }
     }
 
@@ -69,9 +73,10 @@ public class RaidClient {
                 String[] roomInfo = message.split(",");
 
                 Long roomId = Long.parseLong(roomInfo[0]);
-                Long hostUserId = Long.parseLong(roomInfo[1]);
+                String roomName = roomInfo[1];
+                String hostName = roomInfo[2];
 
-                rooms.add(new RaidRoomDTO(roomId, hostUserId));
+                rooms.add(new RaidRoomDTO(roomId, roomName, hostName));
             }
         }
 
@@ -104,14 +109,17 @@ public class RaidClient {
             writer.println(roomId);
 
             // 서버가 보내는 모든 메시지 수신
-            startMessageListener(reader);
+            startMessageListener(reader, writer);
         }
     }
 
     /**
      * 서버 메시지를 현재 스레드에서 수신한다.
      */
-    private void startMessageListener(BufferedReader reader) throws IOException {
+    private void startMessageListener(BufferedReader reader, PrintWriter writer
+    ) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+
         String message;
 
         while ((message = reader.readLine()) != null) {
@@ -120,6 +128,11 @@ public class RaidClient {
             }
 
             System.out.println(message);
+
+            if (message.equals("선택할 물고기 번호를 입력하세요 : ")) {
+                int choice = scanner.nextInt();
+                writer.println(choice);
+            }
         }
     }
 }

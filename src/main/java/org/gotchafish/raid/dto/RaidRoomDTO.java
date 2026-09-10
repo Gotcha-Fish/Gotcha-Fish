@@ -2,18 +2,20 @@ package org.gotchafish.raid.dto;
 
 public class RaidRoomDTO {
     private Long roomId;
-    private Long hostUserId;
+    private String roomName;
+    private String hostName;
 
-    public  RaidRoomDTO(Long roomId, Long hostUserId) {
+    public  RaidRoomDTO(Long roomId, String roomName, String hostName) {
         this.roomId = roomId;
-        this.hostUserId = hostUserId;
+        this.roomName = roomName;
+        this.hostName = hostName;
     }
 
     public Long getRoomId() {
         return roomId;
     }
 
-    public Long getHostUserId() {
-        return hostUserId;
-    }
+    public String getRoomName() { return roomName; }
+
+    public String getHostName() { return hostName; }
 }

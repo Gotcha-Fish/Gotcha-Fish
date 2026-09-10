@@ -21,11 +21,11 @@ public class RaidServer {
             System.out.println();
 
             while (true) {
-                // 클라이언트의 접속을 기다리고, 접속하면 통신용 Socket을 생성
+                // 클라이언트 접속을 기다리고, 접속하면 통신용 Socket 생성
                 Socket socket = serverSocket.accept();
-                System.out.println("클라이언트가 접속했습니다.");
+                System.out.println("클라이언트가 접속했습니다. - " + socket.getRemoteSocketAddress());
 
-                // 접속한 클라이언트마다 전담 Thread를 생성
+                // 접속한 클라이언트마다 전담 Thread 생성
                 RaidClientThread clientThread = new RaidClientThread(socket, roomManager);
                 clientThread.start();
             }

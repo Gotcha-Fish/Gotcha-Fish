@@ -8,17 +8,17 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class RaidRoomManager {
     private final Map<Long, RaidRoom> rooms = new ConcurrentHashMap<>();
-    private Long nextRoomId = 1L;
+    private Long nextRoomId = 1001L;
 
     /**
      * 새로운 대결방을 생성한다.
-     * @param hostThread 방을 생성한 Host의 Thread
+     * @param hostThread 방을 생성한 Host Thread
      * @return 생성된 RaidRoom
      */
-    public synchronized RaidRoom createRoom(RaidClientThread hostThread) {
+    public synchronized RaidRoom createRoom(String roomName, RaidClientThread hostThread, String hostName) {
         Long roomId = nextRoomId++;
 
-        RaidRoom room = new RaidRoom(roomId, hostThread);
+        RaidRoom room = new RaidRoom(roomId, roomName, hostThread, hostName);
         rooms.put(roomId, room);
 
         return room;
@@ -36,10 +36,10 @@ public class RaidRoomManager {
     /**
      * 대결방에 참가한다.
      * @param roomId 방 번호
-     * @param guestThread 참가하는 Guest의 Thread
+     * @param guestThread 참가하는 Guest Thread
      * @return 참가한 RaidRoom
      */
-    public RaidRoom joinRoom(Long roomId, RaidClientThread guestThread) {
+    public RaidRoom joinRoom(Long roomId, RaidClientThread guestThread, String guestName) {
         RaidRoom room = findRoom(roomId);
 
         if (room == null) {
@@ -49,10 +49,10 @@ public class RaidRoomManager {
         // 같은 방의 정원 확인과 참가 처리를 하나의 작업으로 보호한다.
         synchronized (room) {
             if (room.isFull()) {
-                throw new RuntimeException("대결이 시작된 방입니다.");
+                throw new RuntimeException("이미 대결이 시작된 방입니다.");
             }
 
-            room.join(guestThread);
+            room.join(guestThread, guestName);
             return room;
         }
     }
