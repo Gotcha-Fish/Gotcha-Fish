@@ -4,11 +4,13 @@ import org.gotchafish.common.JDBCUtil;
 import org.gotchafish.fish.dao.FishDAO;
 import org.gotchafish.fish.dao.FishDAOImpl;
 import org.gotchafish.fish.dto.FishDTO;
+import org.gotchafish.fish.dto.Rarity;
 import org.gotchafish.user.dao.UserDAO;
 import org.gotchafish.user.dao.UserDAOImpl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FishServiceImpl implements FishService {
@@ -73,6 +75,29 @@ public class FishServiceImpl implements FishService {
                 conn.setAutoCommit(true);
                 conn.close();
             }
+        }
+    }
+
+    @Override
+    public FishDTO generateFish(Long spotId) throws SQLException {
+        try (Connection conn = JDBCUtil.getConnection()) {
+            List<FishDTO> candidates = fishDAO.findBySpotId(conn, spotId);
+
+            List<FishDTO> matched;
+            Rarity rarity;
+
+            // 일단 하나 뽑는다
+            do {
+                rarity = Rarity.pickRandom();
+                matched = new ArrayList<>();
+
+                for (FishDTO fish : candidates) {
+                    if (fish.getRarity() == rarity) matched.add(fish);
+                }
+            } while (matched.isEmpty()); // 없으면 다시 시도
+
+            int index = (int) (Math.random() * matched.size());
+            return matched.get(index);
         }
     }
 }
