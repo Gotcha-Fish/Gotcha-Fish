@@ -41,4 +41,18 @@ public interface FishService {
      * @throws SQLException DB 처리 중 예외가 발생한 경우
      */
     FishDTO generateFish(Long spotId) throws SQLException;
+
+    /**
+     * 물고기를 획득한다.
+     * <p>
+     * 낚시에 성공했을 때, 잡은 물고기를 보유 목록에 저장하는 데 사용된다.
+     * 이미 같은 물고기를 보유 중이면 수량을 증가하고, 처음 잡은 물고기면 새로 등록한다.
+     *
+     * @param userId 낚시를 한 유저의 ID
+     * @param fishId 생성된 물고기 ID
+     * @return 성공하면 true, 실패하면 false
+     * @throws RuntimeException 물고기 획득 실패
+     * @throws SQLException DB 처리 중 예외가 발생한 경우
+     */
+    boolean catchFish(Long userId, Long fishId) throws SQLException;
 }
