@@ -1,7 +1,5 @@
 package org.gotchafish.fishing.controller;
 
-import org.gotchafish.dictionary.dao.DictionaryDAO;
-import org.gotchafish.dictionary.dao.DictionaryDAOImpl;
 import org.gotchafish.fish.dto.FishDTO;
 import org.gotchafish.fish.service.FishService;
 import org.gotchafish.fish.service.FishServiceImpl;
@@ -12,6 +10,7 @@ import org.gotchafish.rod.service.RodService;
 import org.gotchafish.rod.service.RodServiceImpl;
 import org.gotchafish.spot.service.SpotService;
 import org.gotchafish.spot.service.SpotServiceImpl;
+import org.gotchafish.user.dto.UserDTO;
 import org.gotchafish.user.service.UserService;
 import org.gotchafish.user.service.UserServiceImpl;
 
@@ -22,7 +21,6 @@ public class FishingController {
     private final FishService fishService = FishServiceImpl.getInstance();
     private final RodService rodService = RodServiceImpl.getInstance();
     private final UserService userService = UserServiceImpl.getInstance();
-    private final DictionaryDAO dictionaryDAO = DictionaryDAOImpl.getInstance();
 
     private static final FishingController instance = new FishingController();
 
@@ -60,5 +58,29 @@ public class FishingController {
     public boolean isCaught(int catchProbability) {
         int random = (int) (Math.random() * 100);
         return random < catchProbability;
+    }
+
+    public boolean finishFishing(Long userId, Long rodId, FishDTO fish, boolean caught) {
+        try {
+            rodService.useRod(userId, rodId);
+            userService.increaseFishingCount(userId);
+
+            UserDTO user = userService.getUser(userId);
+
+            if (caught) {
+                fishService.catchFish(userId, fish.getFishId());
+                SuccessView.fishingSuccess(fish, user.getTotalFishing());
+            } else {
+                SuccessView.fishingCaughtFail(user.getTotalFishing());
+            }
+
+            return true;
+        } catch (RuntimeException e) {
+            FailView.fishingFail(e.getMessage());
+        } catch (SQLException e) {
+            FailView.fishingFail("낚시 처리에 실패했습니다.");
+        }
+
+        return false;
     }
 }
