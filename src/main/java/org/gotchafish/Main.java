@@ -2,6 +2,7 @@ package org.gotchafish;
 
 import org.gotchafish.dictionary.view.DictionaryView;
 import org.gotchafish.fish.view.FishView;
+import org.gotchafish.fishing.view.FishingView;
 import org.gotchafish.raid.view.RaidView;
 import org.gotchafish.ranking.view.RankingView;
 import org.gotchafish.rod.view.RodView;
@@ -23,6 +24,7 @@ public class Main {
         RankingView rankingView = new RankingView();
         DictionaryView dictionaryView = new DictionaryView();
         RaidView raidView = new RaidView();
+        FishingView fishingView = new FishingView();
 
         // 프로그램 전체 반복
         while (true) {
@@ -81,6 +83,7 @@ public class Main {
                 switch (choice) {
                     case "1":
                         // 낚시하기
+                        fishingView.startFishing();
                         break;
                     case "2":
                         // 물고기 판매
