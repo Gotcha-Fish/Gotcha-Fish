@@ -1,6 +1,8 @@
 package org.gotchafish.fish.service;
 
 import org.gotchafish.common.JDBCUtil;
+import org.gotchafish.dictionary.dao.DictionaryDAO;
+import org.gotchafish.dictionary.dao.DictionaryDAOImpl;
 import org.gotchafish.fish.dao.FishDAO;
 import org.gotchafish.fish.dao.FishDAOImpl;
 import org.gotchafish.fish.dto.FishDTO;
@@ -16,6 +18,7 @@ import java.util.List;
 public class FishServiceImpl implements FishService {
     private final FishDAO fishDAO = FishDAOImpl.getInstance();
     private final UserDAO userDAO = UserDAOImpl.getInstance();
+    private final DictionaryDAO dictionaryDAO = DictionaryDAOImpl.getInstance();
 
     private static final FishService instance = new FishServiceImpl();
 
@@ -116,6 +119,12 @@ public class FishServiceImpl implements FishService {
             } else {
                 if (!fishDAO.insertUserFish(conn, userId, fishId, 1)) {
                     throw new RuntimeException("물고기 획득에 실패했습니다.");
+                }
+            }
+
+            if (!dictionaryDAO.existsByUserIdAndFishId(conn, userId, fishId)) {
+                if (!dictionaryDAO.insert(conn, userId, fishId)) {
+                    throw new RuntimeException("도감 등록에 실패했습니다.");
                 }
             }
 
