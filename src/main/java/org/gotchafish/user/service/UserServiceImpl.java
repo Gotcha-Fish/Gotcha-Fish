@@ -239,4 +239,18 @@ public class UserServiceImpl implements UserService {
             return true;
         }
     }
+
+    @Override
+    public boolean increaseFishingCount(Long userId) throws SQLException {
+        try (Connection conn = JDBCUtil.getConnection()) {
+            // 회원 정보 조회
+            UserDTO user = userDAO.findByUserId(conn, userId);
+
+            if (user == null) {
+                throw new RuntimeException("존재하지 않는 회원입니다.");
+            }
+
+            return userDAO.updateFishingCount(conn, user.getUserId());
+        }
+    }
 }
