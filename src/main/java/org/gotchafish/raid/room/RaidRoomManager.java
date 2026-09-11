@@ -61,7 +61,7 @@ public class RaidRoomManager {
      * 대결방을 삭제한다.
      * @param roomId 방 번호
      */
-    public void removeRoom(Long roomId) {
+    public synchronized void removeRoom(Long roomId) {
         rooms.remove(roomId);
     }
 

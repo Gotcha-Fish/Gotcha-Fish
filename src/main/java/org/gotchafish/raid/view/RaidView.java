@@ -1,6 +1,7 @@
 package org.gotchafish.raid.view;
 
 import org.gotchafish.raid.controller.RaidController;
+import org.gotchafish.user.dto.Session;
 
 import java.util.Scanner;
 
@@ -9,7 +10,7 @@ public class RaidView {
 
     private final RaidController raidController = RaidController.getInstance();
 
-    public void showRaidMenu(Long userId) {
+    public void showRaidMenu() {
         System.out.println();
         System.out.println("================================");
         System.out.println("             대결");
@@ -26,10 +27,10 @@ public class RaidView {
 
         switch (choice) {
             case 1:
-                createRoom(userId);
+                createRoom(Session.getUserId());
                 break;
             case 2:
-                findRooms(userId);
+                findRooms(Session.getUserId());
                 break;
             case 0:
                 return;
@@ -62,7 +63,7 @@ public class RaidView {
 
         if (raidController.findRooms(userId)) {
             joinRoom(userId);
-        };
+        }
     }
 
     public void joinRoom(Long userId) {
@@ -73,9 +74,5 @@ public class RaidView {
         System.out.println();
 
         raidController.joinRoom(userId, roomId);
-    }
-
-    public static void main(String[] args) {
-        new RaidView().showRaidMenu(1L);
     }
 }

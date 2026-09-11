@@ -9,15 +9,13 @@ public class RaidRoom {
 
     private final RaidClientThread hostThread;
     private RaidClientThread guestThread;
+    private RaidClientThread winnerThread;
 
     private final String hostNickname;
     private String guestNickname;
 
     private FishDTO hostFish;
     private FishDTO guestFish;
-
-    private RaidClientThread winnerThread;
-    private boolean battleResultReady = false;
 
     public RaidRoom(Long roomId, String roomName, RaidClientThread hostThread, String hostNickname) {
         this.roomId = roomId;
@@ -41,9 +39,9 @@ public class RaidRoom {
         return hostThread;
     }
 
-    public RaidClientThread getGuestThread() {
-        return guestThread;
-    }
+    public RaidClientThread getGuestThread() { return guestThread; }
+
+    public RaidClientThread getWinnerThread() { return winnerThread; }
 
     public String getHostNickname() { return hostNickname; }
 
@@ -53,10 +51,23 @@ public class RaidRoom {
 
     public FishDTO getGuestFish() { return guestFish; }
 
-    public RaidClientThread getWinnerThread() { return winnerThread; }
+    // 게스트 입장 여부
+    public boolean isFull() { return guestThread != null; }
 
-    public boolean isFull() {
-        return guestThread != null;
+    // 대결 판정 여부
+    public boolean isDone() { return winnerThread != null; }
+
+    /**
+     * 두 플레이어가 모두 물고기를 선택할 때까지 대기한다.
+     */
+    public synchronized void waitForFishSelection() {
+        try {
+            while (hostFish == null || guestFish == null) {
+                wait();
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     /**
@@ -75,24 +86,11 @@ public class RaidRoom {
     }
 
     /**
-     * 두 플레이어가 모두 물고기를 선택할 때까지 대기한다.
-     */
-    public synchronized void waitForFishSelection() {
-        try {
-            while (hostFish == null || guestFish == null) {
-                wait();
-            }
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-    }
-
-    /**
      * 승부가 판정날 때까지 대기한다.
      */
     public synchronized void waitForBattleResult() {
         try {
-            while (!battleResultReady) {
+            while (!isDone()) {
                 wait();
             }
         } catch (InterruptedException e) {
@@ -101,7 +99,7 @@ public class RaidRoom {
     }
 
     /**
-     * 두 물고기의 희귀도를 비교하여 승자를 결정하고 결과를 양쪽에 전달한다.
+     * 두 물고기의 희귀도를 비교하여 승자를 결정한다.
      */
     public synchronized void determineBattleResult() {
         FishDTO hostFish = this.hostFish;
@@ -121,7 +119,6 @@ public class RaidRoom {
             winnerThread = Math.random() < 0.5 ? host : guest;
         }
 
-        battleResultReady = true;
         notifyAll();
     }
 }

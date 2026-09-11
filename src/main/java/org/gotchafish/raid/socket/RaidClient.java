@@ -1,5 +1,6 @@
 package org.gotchafish.raid.socket;
 
+import org.gotchafish.common.PropertyLoader;
 import org.gotchafish.raid.dto.RaidRoomDTO;
 
 import java.io.BufferedReader;
@@ -12,8 +13,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class RaidClient {
-    private static final String HOST = "localhost";
-    private static final int PORT = 9999;
+    private static final String HOST = PropertyLoader.get("HOST");
+    private static final int PORT = Integer.parseInt(PropertyLoader.get("PORT"));
 
     private final Long userId;
 

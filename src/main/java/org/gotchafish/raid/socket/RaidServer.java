@@ -1,5 +1,6 @@
 package org.gotchafish.raid.socket;
 
+import org.gotchafish.common.PropertyLoader;
 import org.gotchafish.raid.room.RaidRoomManager;
 
 import java.io.IOException;
@@ -7,8 +8,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class RaidServer {
-    // 서버 포트 번호 -> 이후 변경 가능
-    private static final int PORT = 9999;
+    private static final int PORT = Integer.parseInt(PropertyLoader.get("PORT"));
 
     // 서버에서 생성된 모든 대결방을 관리
     private final RaidRoomManager roomManager = new RaidRoomManager();

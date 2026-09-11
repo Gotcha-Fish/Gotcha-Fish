@@ -62,13 +62,14 @@ public class RaidClientThread extends Thread {
                 // 서버 기준: 클라이언트에게 데이터를 보냄
                 PrintWriter writer = new PrintWriter(socket.getOutputStream(), true)
         ) {
-            // 소켓이 닫히기 전에 예외를 잡아서 오류 응답을 보낸다.
             try {
+                // 클라이언트 userId 받기
                 userId = Long.parseLong(reader.readLine());
 
                 // 클라이언트 닉네임 조회
                 nickName = userService.getUser(userId).getNickname();
 
+                // "CREATE_ROOM", "GET_ROOMS", "JOIN_ROOM"
                 String message = reader.readLine();
 
                 switch (message) {
@@ -86,6 +87,7 @@ public class RaidClientThread extends Thread {
                         writer.println("상대방을 기다리는 중...");
                         writer.println();
 
+                        // 게스트 입장 대기
                         waitForGuest();
 
                         writer.println("🎉 상대방이 입장했습니다.");
@@ -113,6 +115,7 @@ public class RaidClientThread extends Thread {
                         writer.println("🎉 대결방에 입장했습니다!");
                         writer.println();
 
+                        // 호스트 깨우기
                         RaidClientThread hostThread = room.getHostThread();
                         hostThread.notifyGuestJoined();
 
@@ -192,6 +195,11 @@ public class RaidClientThread extends Thread {
 
         // 두 플레이어 모두 결과 출력
         printBattleResult(room, writer);
+
+        // 대결방 삭제
+        if (this == room.getHostThread()) {
+            roomManager.removeRoom(room.getRoomId());
+        }
     }
 
     /**

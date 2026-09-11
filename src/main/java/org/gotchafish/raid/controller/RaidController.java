@@ -3,7 +3,6 @@ package org.gotchafish.raid.controller;
 import org.gotchafish.raid.dto.RaidRoomDTO;
 import org.gotchafish.raid.socket.RaidClient;
 import org.gotchafish.raid.view.FailView;
-import org.gotchafish.raid.view.RaidView;
 import org.gotchafish.raid.view.SuccessView;
 
 import java.io.IOException;
@@ -61,9 +60,5 @@ public class RaidController {
         } catch (RuntimeException e) {
             FailView.raidFail(e.getMessage());
         }
-    }
-
-    public static void main(String[] args) {
-        new RaidView().showRaidMenu(2L);
     }
 }
