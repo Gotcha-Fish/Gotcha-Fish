@@ -1,5 +1,6 @@
 package org.gotchafish;
 
+import org.gotchafish.dictionary.view.DictionaryView;
 import org.gotchafish.fish.view.FishView;
 import org.gotchafish.ranking.view.RankingView;
 import org.gotchafish.rod.view.RodView;
@@ -19,6 +20,7 @@ public class Main {
         FishView fishView = new FishView();
         SpotView spotView = new SpotView();
         RankingView rankingView = new RankingView();
+        DictionaryView dictionaryView = new DictionaryView();
 
         // 프로그램 전체 반복
         while (true) {
@@ -92,6 +94,7 @@ public class Main {
                         break;
                     case "5":
                         // 물고기 도감
+                        dictionaryView.showDictionary();
                         break;
                     case "6":
                         // 랭킹
