@@ -32,6 +32,7 @@ public class DictionaryDAOImpl implements DictionaryDAO {
             LEFT JOIN tbl_fish_dictionary d
                 ON f.fish_id = d.fish_id
                 AND d.user_id = ?
+                ORDER BY f.spot_id, f.fish_id
         """;
         List<DictionaryEntryDTO> dictionary = new ArrayList<>();
 
