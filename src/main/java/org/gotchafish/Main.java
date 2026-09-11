@@ -2,6 +2,7 @@ package org.gotchafish;
 
 import org.gotchafish.dictionary.view.DictionaryView;
 import org.gotchafish.fish.view.FishView;
+import org.gotchafish.fishing.view.FishingView;
 import org.gotchafish.raid.view.RaidView;
 import org.gotchafish.ranking.view.RankingView;
 import org.gotchafish.rod.view.RodView;
@@ -24,6 +25,7 @@ public class Main {
         RankingView rankingView = new RankingView();
         DictionaryView dictionaryView = new DictionaryView();
         RaidView raidView = new RaidView();
+        FishingView fishingView = new FishingView();
 
         while (true) {
             do {
@@ -60,6 +62,7 @@ public class Main {
                 switch (choice) {
                     case "1":
                         // 낚시하기
+                        fishingView.startFishing();
                         break;
                     case "2":
                         fishView.sellFish();
@@ -85,11 +88,11 @@ public class Main {
                     case "9":
                         Session.setUserId(null);
                         System.out.println();
-                        System.out.println(RED + "👋 로그아웃 되었습니다." + RESET);
+                        System.out.println(BRIGHT_YELLOW + "👋 로그아웃 되었습니다." + RESET);
                         break;
                     default:
                         System.out.println();
-                        System.out.println(BRIGHT_PURPLE + "❌ 잘못된 입력입니다." + RESET);
+                        System.out.println(RED + "❌ 잘못된 입력입니다." + RESET);
                 }
             }
         }
@@ -103,14 +106,14 @@ public class Main {
         System.out.println();
         System.out.println(GREEN + "  1. " + RESET + "로그인");
         System.out.println(GREEN + "  2. " + RESET + "회원가입");
-        System.out.println(GREEN + "  3. " + RESET + "종료");
+        System.out.println(YELLOW + "  3. " + RESET + "종료");
         System.out.println();
     }
 
     private static void printGameMenu() {
         System.out.println();
         System.out.println(BRIGHT_CYAN + "════════════════════════════════════" + RESET);
-        System.out.println(BOLD + BRIGHT_YELLOW + "             🎣 낚시터" + RESET);
+        System.out.println(BOLD + BRIGHT_YELLOW + "          ⛵ 낚시터 로비" + RESET);
         System.out.println(BRIGHT_CYAN + "════════════════════════════════════" + RESET);
         System.out.println();
         System.out.println(GREEN + "  1. " + RESET + "낚시하기");
@@ -120,7 +123,7 @@ public class Main {
         System.out.println(GREEN + "  5. " + RESET + "물고기 도감");
         System.out.println(GREEN + "  6. " + RESET + "랭킹");
         System.out.println(GREEN + "  7. " + RESET + "내 정보");
-        System.out.println(BRIGHT_RED + "  8. " + RESET + "대결");
+        System.out.println(GREEN + "  8. " + RESET + "1:1 대결");
         System.out.println(YELLOW + "  9. " + RESET + "로그아웃");
         System.out.println();
     }

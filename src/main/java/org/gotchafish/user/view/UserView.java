@@ -23,9 +23,11 @@ public class UserView {
         System.out.print(GREEN + "아이디 : " + RESET);
         String loginId = sc.nextLine();
 
+        System.out.println();
         System.out.print(GREEN + "비밀번호 : " + RESET);
         String password = sc.nextLine();
 
+        System.out.println();
         System.out.print(GREEN + "닉네임 : " + RESET);
         String nickname = sc.nextLine();
 
