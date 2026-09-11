@@ -2,6 +2,7 @@ package org.gotchafish;
 
 import org.gotchafish.dictionary.view.DictionaryView;
 import org.gotchafish.fish.view.FishView;
+import org.gotchafish.raid.view.RaidView;
 import org.gotchafish.ranking.view.RankingView;
 import org.gotchafish.rod.view.RodView;
 import org.gotchafish.spot.view.SpotView;
@@ -21,6 +22,7 @@ public class Main {
         SpotView spotView = new SpotView();
         RankingView rankingView = new RankingView();
         DictionaryView dictionaryView = new DictionaryView();
+        RaidView raidView = new RaidView();
 
         // 프로그램 전체 반복
         while (true) {
@@ -106,6 +108,7 @@ public class Main {
                         break;
                     case "8":
                         // 대결
+                        raidView.showRaidMenu();
                         break;
                     case "9":
                         Session.setUserId(null);
