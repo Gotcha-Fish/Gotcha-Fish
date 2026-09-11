@@ -11,6 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DictionaryDAOImpl implements DictionaryDAO {
+    private static final DictionaryDAO instance = new DictionaryDAOImpl();
+
+    public static DictionaryDAO getInstance() {
+        return instance;
+    }
+
 
     @Override
     public List<DictionaryEntryDTO> findAll(Connection conn, Long userId) throws SQLException {
