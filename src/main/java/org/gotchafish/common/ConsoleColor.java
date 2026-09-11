@@ -5,7 +5,7 @@ public class ConsoleColor {
 
     // 기본 색상
     public static final String BLACK = "\u001B[30m";
-    public static final String RED = "\u001B[31m";
+    public static final String RED = "\u001B[95m";
     public static final String GREEN = "\u001B[32m";
     public static final String YELLOW = "\u001B[33m";
     public static final String BLUE = "\u001B[34m";
@@ -18,7 +18,7 @@ public class ConsoleColor {
     public static final String BRIGHT_GREEN = "\u001B[92m";
     public static final String BRIGHT_YELLOW = "\u001B[93m";
     public static final String BRIGHT_BLUE = "\u001B[94m";
-    public static final String BRIGHT_PURPLE = "\u001B[95m";
+    public static final String BRIGHT_PURPLE = "\u001B[31m";
     public static final String BRIGHT_CYAN = "\u001B[96m";
 
     // 스타일
