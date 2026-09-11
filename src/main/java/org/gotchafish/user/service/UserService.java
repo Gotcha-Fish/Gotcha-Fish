@@ -63,4 +63,13 @@ public interface UserService {
      * @throws SQLException DB 처리 중 예외가 발생
      */
     boolean updatePassword(Long userId, String oldPassword, String newPassword)  throws SQLException;
+
+    /**
+     * 회원의 총 낚시 수를 증가시킨다.
+     * @param userId 수정할 회원의 ID
+     * @return 수정 성공시 true, 실패시 false
+     * @throws RuntimeException 존재하지 않는 사용자, 비밀번호 불일치, 비밀번호 변경 실패
+     * @throws SQLException DB 처리 중 예외가 발생
+     */
+    boolean increaseFishingCount(Long userId) throws SQLException;
 }
