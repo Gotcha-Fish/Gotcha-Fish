@@ -18,9 +18,9 @@ public class SuccessView {
 
         for (RodDTO rod : rodList) {
             System.out.println("  " + GREEN + rod.getRodId() + ". " + RESET + BOLD  + rod.getRodName() + RESET);
-            System.out.println("     "  + "✦" + RESET + " 포획 확률 : " + BOLD + BRIGHT_BLUE + rod.getCatchProbability() + "%" + RESET);
-            System.out.println("     "  + "✦" + RESET + " 가격 : " + BOLD + YELLOW + rod.getPrice() + "G" + RESET);
-            System.out.println("     "  + "✦" + RESET + " 보유량 : " + BOLD + rod.getQuantity() + "개" + RESET);
+            System.out.println("  "  + "✦" + RESET + " 포획 확률 : " + BOLD + BRIGHT_BLUE + rod.getCatchProbability() + "%" + RESET);
+            System.out.println("  "  + "✦" + RESET + " 가격 : " + BOLD + YELLOW + rod.getPrice() + "G" + RESET);
+            System.out.println("  "  + "✦" + RESET + " 보유량 : " + BOLD + rod.getQuantity() + "개" + RESET);
             System.out.println();
         }
     }
@@ -40,9 +40,10 @@ public class SuccessView {
         System.out.println();
 
         for (RodDTO rod : rodList) {
-            System.out.println("  " + GREEN + rod.getRodId() + ". " + RESET + BOLD + rod.getRodName() + RESET + " X " + rod.getQuantity());
-            System.out.println("  " + "✦" + RESET + " 포획 확률 : " + BOLD + BRIGHT_BLUE + rod.getCatchProbability() + "%" + RESET);
-            System.out.println("  " + "✦" + RESET + " 보유량 : " + BOLD + YELLOW + rod.getQuantity() + "개" + RESET);
+            System.out.println("  " + GREEN + rod.getRodId() + ". " + RESET + BOLD  + rod.getRodName() + RESET);
+            System.out.println("  "  + "✦" + RESET + " 포획 확률 : " + BOLD + BRIGHT_BLUE + rod.getCatchProbability() + "%" + RESET);
+            System.out.println("  "  + "✦" + RESET + " 가격 : " + BOLD + YELLOW + rod.getPrice() + "G" + RESET);
+            System.out.println("  "  + "✦" + RESET + " 보유량 : " + BOLD + rod.getQuantity() + "개" + RESET);
             System.out.println();
         }
     }
