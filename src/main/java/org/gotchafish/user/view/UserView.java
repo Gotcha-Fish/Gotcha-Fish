@@ -6,6 +6,8 @@ import org.gotchafish.user.controller.UserController;
 
 import java.util.Scanner;
 
+import static org.gotchafish.common.ConsoleColor.*;
+
 public class UserView {
     private final Scanner sc = new Scanner(System.in);
 
@@ -13,18 +15,18 @@ public class UserView {
 
     public void signUp() {
         System.out.println();
-        System.out.println("================================");
-        System.out.println("             회원가입");
-        System.out.println("================================");
+        System.out.println(BRIGHT_CYAN + "════════════════════════════════════" + RESET);
+        System.out.println(BOLD + BRIGHT_YELLOW + "             🐣 회원가입" + RESET);
+        System.out.println(BRIGHT_CYAN + "════════════════════════════════════" + RESET);
         System.out.println();
 
-        System.out.print("아이디 : ");
+        System.out.print(GREEN + "아이디 : " + RESET);
         String loginId = sc.nextLine();
 
-        System.out.print("비밀번호 : ");
+        System.out.print(GREEN + "비밀번호 : " + RESET);
         String password = sc.nextLine();
 
-        System.out.print("닉네임 : ");
+        System.out.print(GREEN + "닉네임 : " + RESET);
         String nickname = sc.nextLine();
 
         UserDTO user = new UserDTO(loginId, password, nickname);
@@ -34,15 +36,16 @@ public class UserView {
 
     public void loginInput() {
         System.out.println();
-        System.out.println("================================");
-        System.out.println("             로그인");
-        System.out.println("================================");
+        System.out.println(BRIGHT_CYAN + "════════════════════════════════════" + RESET);
+        System.out.println(BOLD + BRIGHT_YELLOW + "            👋 로그인" + RESET);
+        System.out.println(BRIGHT_CYAN + "════════════════════════════════════" + RESET);
         System.out.println();
 
-        System.out.print("아이디 : ");
+        System.out.print(GREEN + "아이디 : " + RESET);
         String loginId = sc.nextLine();
 
-        System.out.print("비밀번호 : ");
+        System.out.println();
+        System.out.print(GREEN + "비밀번호 : " + RESET);
         String password = sc.nextLine();
 
         controller.login(loginId, password);
@@ -50,20 +53,20 @@ public class UserView {
 
     public void profile() {
         System.out.println();
-        System.out.println("================================");
-        System.out.println("             내 정보");
-        System.out.println("================================");
+        System.out.println(BRIGHT_CYAN + "════════════════════════════════════" + RESET);
+        System.out.println(BOLD + BRIGHT_YELLOW + "            ✨ 내 정보" + RESET);
+        System.out.println(BRIGHT_CYAN + "════════════════════════════════════" + RESET);
         System.out.println();
 
-        if(!controller.profile(Session.getUserId())) return;
+        if (!controller.profile(Session.getUserId())) return;
 
         System.out.println();
-        System.out.println("1. 닉네임 수정");
-        System.out.println("2. 비밀번호 수정");
-        System.out.println("0. 뒤로가기");
+        System.out.println(GREEN + "  1. " + RESET + "닉네임 수정");
+        System.out.println(GREEN + "  2. " + RESET + "비밀번호 수정");
+        System.out.println(YELLOW + "  0. " + RESET + "뒤로가기");
         System.out.println();
 
-        System.out.print("선택 : ");
+        System.out.print(BRIGHT_CYAN + "선택 > " + RESET);
         int choice = sc.nextInt();
         sc.nextLine();
 
@@ -81,23 +84,23 @@ public class UserView {
 
     private void changeNicknameInput() {
         System.out.println();
-        System.out.print("새 닉네임 : ");
+        System.out.print(GREEN + "새 닉네임 : " + RESET);
         String nickname = sc.nextLine();
 
         System.out.println();
-        System.out.print("비밀번호 : ");
+        System.out.print(GREEN + "비밀번호 : " + RESET);
         String password = sc.nextLine();
 
-        controller.changeNickname(Session.getUserId(), nickname ,password);
+        controller.changeNickname(Session.getUserId(), nickname, password);
     }
 
     private void changePasswordInput() {
         System.out.println();
-        System.out.print("기존 비밀번호 : ");
+        System.out.print(GREEN + "기존 비밀번호 : " + RESET);
         String oldPassword = sc.nextLine();
 
         System.out.println();
-        System.out.print("새 비밀번호 : ");
+        System.out.print(GREEN + "새 비밀번호 : " + RESET);
         String newPassword = sc.nextLine();
 
         controller.changePassword(Session.getUserId(), oldPassword, newPassword);
