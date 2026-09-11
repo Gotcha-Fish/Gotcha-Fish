@@ -55,4 +55,17 @@ public interface FishService {
      * @throws SQLException DB 처리 중 예외가 발생한 경우
      */
     boolean catchFish(Long userId, Long fishId) throws SQLException;
+
+    /**
+     * 대결에서 패배하여 물고기를 잃는다.
+     * <p>
+     * 사용자가 보유한 물고기 수량을 1 차감한다. 골드 지급은 없다.
+     *
+     * @param userId 물고기를 잃는 회원의 ID
+     * @param fishId 잃을 물고기의 ID
+     * @return 성공하면 true, 실패하면 false
+     * @throws RuntimeException 존재하지 않는 물고기, 보유 수량 부족, 처리 실패
+     * @throws SQLException DB 처리 중 예외가 발생한 경우
+     */
+    boolean loseFish(Long userId, Long fishId) throws SQLException;
 }

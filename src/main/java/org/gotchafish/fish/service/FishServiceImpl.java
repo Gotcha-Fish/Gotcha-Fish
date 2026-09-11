@@ -141,5 +141,33 @@ public class FishServiceImpl implements FishService {
         }
     }
 
+    @Override
+    public boolean loseFish(Long userId, Long fishId) throws SQLException {
+        Connection conn = null;
 
+        try {
+            conn = JDBCUtil.getConnection();
+            conn.setAutoCommit(false);
+
+            FishDTO fish = fishDAO.findById(conn, fishId);
+            if (fish == null) throw new RuntimeException("존재하지 않는 물고기 입니다.");
+
+            int myQuantity = fishDAO.findUserFishQuantity(conn, userId, fishId);
+            if (myQuantity < 1) throw new RuntimeException("보유한 물고기 수량이 부족합니다.");
+
+            if (!fishDAO.updateUserFishQuantity(conn, userId, fishId, -1))
+                throw new RuntimeException("물고기 차감에 실패했습니다.");
+
+            conn.commit();
+            return true;
+        } catch (Exception e) {
+            if (conn != null) conn.rollback();
+            throw e;
+        } finally {
+            if (conn != null) {
+                conn.setAutoCommit(true);
+                conn.close();
+            }
+        }
+    }
 }
