@@ -11,9 +11,9 @@ import java.util.List;
 public class RankingController {
     private final RankingServiceImpl rankingService = RankingServiceImpl.getInstance();
 
-    private static final RankingController rankingController = new RankingController();
+    private static final RankingController getInstance = new RankingController();
 
-    public static RankingController getInstance() { return rankingController; }
+    public static RankingController getInstance() { return getInstance; }
 
     public void showMyFishingRanking(Long userId) {
         try {

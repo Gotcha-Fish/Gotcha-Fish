@@ -100,31 +100,32 @@ public class Main {
 
     private static void printMainMenu() {
         System.out.println();
-        System.out.println(BRIGHT_CYAN + "════════════════════════════════════" + RESET);
-        System.out.println(BOLD + BRIGHT_YELLOW + "         🐟 잡았다 요놈! 🐟" + RESET);
-        System.out.println(BRIGHT_CYAN + "════════════════════════════════════" + RESET);
+        System.out.println(BRIGHT_CYAN + "═".repeat(40) + RESET);
+        System.out.println(BOLD + BRIGHT_YELLOW + "          🐟 잡았다 요놈! 🐟" + RESET);
+        System.out.println("            낚시를 시작합니다" + RESET);
+        System.out.println(BRIGHT_CYAN + "═".repeat(40)  + RESET);
         System.out.println();
-        System.out.println(GREEN + "  1. " + RESET + "로그인");
-        System.out.println(GREEN + "  2. " + RESET + "회원가입");
-        System.out.println(YELLOW + "  3. " + RESET + "종료");
+        System.out.println(GREEN + "  [1] " + RESET + "로그인");
+        System.out.println(GREEN + "  [2] " + RESET + "회원가입");
+        System.out.println(YELLOW + "  [3] " + RESET + "종료");
         System.out.println();
     }
 
     private static void printGameMenu() {
         System.out.println();
-        System.out.println(BRIGHT_CYAN + "════════════════════════════════════" + RESET);
-        System.out.println(BOLD + BRIGHT_YELLOW + "          ⛵ 낚시터 로비" + RESET);
-        System.out.println(BRIGHT_CYAN + "════════════════════════════════════" + RESET);
+        System.out.println(BRIGHT_CYAN + "═".repeat(40)  + RESET);
+        System.out.println(BOLD + BRIGHT_YELLOW + "             ⛵ 낚시터 로비" + RESET);
+        System.out.println(BRIGHT_CYAN + "═".repeat(40)  + RESET);
         System.out.println();
-        System.out.println(GREEN + "  1. " + RESET + "낚시하기");
-        System.out.println(GREEN + "  2. " + RESET + "물고기 판매");
-        System.out.println(GREEN + "  3. " + RESET + "낚시대 구입");
-        System.out.println(GREEN + "  4. " + RESET + "낚시터 상점");
-        System.out.println(GREEN + "  5. " + RESET + "물고기 도감");
-        System.out.println(GREEN + "  6. " + RESET + "랭킹");
-        System.out.println(GREEN + "  7. " + RESET + "내 정보");
-        System.out.println(GREEN + "  8. " + RESET + "1:1 대결");
-        System.out.println(YELLOW + "  9. " + RESET + "로그아웃");
+        System.out.println(GREEN + "  [1] " + RESET + "낚시하기");
+        System.out.println(GREEN + "  [2] " + RESET + "물고기 판매");
+        System.out.println(GREEN + "  [3] " + RESET + "낚시대 구입");
+        System.out.println(GREEN + "  [4] " + RESET + "낚시터 상점");
+        System.out.println(GREEN + "  [5] " + RESET + "물고기 도감");
+        System.out.println(GREEN + "  [6] " + RESET + "랭킹");
+        System.out.println(GREEN + "  [7] " + RESET + "내 정보");
+        System.out.println(GREEN + "  [8] " + RESET + "1:1 대결");
+        System.out.println(YELLOW + "  [9] " + RESET + "로그아웃");
         System.out.println();
     }
 }

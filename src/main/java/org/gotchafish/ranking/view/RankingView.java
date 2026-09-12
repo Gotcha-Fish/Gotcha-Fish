@@ -5,6 +5,9 @@ import org.gotchafish.user.dto.Session;
 
 import java.util.Scanner;
 
+import static org.gotchafish.common.ConsoleColor.*;
+import static org.gotchafish.common.ConsoleColor.BRIGHT_YELLOW;
+
 public class RankingView {
     private final Scanner sc = new Scanner(System.in);
 
@@ -13,17 +16,17 @@ public class RankingView {
     public void showRankingMenu() {
         while (true) {
             System.out.println();
-            System.out.println("================================");
-            System.out.println("              랭킹");
-            System.out.println("================================");
+            System.out.println(BRIGHT_CYAN + "═".repeat(40) + RESET);
+            System.out.println(BOLD + BRIGHT_YELLOW + "                🏆 랭킹" + RESET);
+            System.out.println(BRIGHT_CYAN + "═".repeat(40) + RESET);
             System.out.println();
 
-            System.out.println("1. 낚은 물고기 수 랭킹");
-            System.out.println("2. 사용자 보유 골드 랭킹");
-            System.out.println("0. 뒤로가기");
+            System.out.println(GREEN + "  [1]" + RESET +  " 어획량 상위 랭킹");
+            System.out.println(GREEN + "  [2]" + RESET + " 보유 골드 상위 랭킹");
+            System.out.println(YELLOW + "  [0]" + RESET + " 뒤로가기");
             System.out.println();
 
-            System.out.print("선택 : ");
+            System.out.print(BRIGHT_CYAN + "선택 > " + RESET);
             int choice = sc.nextInt();
 
             switch (choice) {
@@ -36,7 +39,7 @@ public class RankingView {
                 case 0:
                     return;
                 default:
-                    System.out.println("잘못된 선택입니다.");
+                    System.out.println(RED + "❌ 잘못된 선택입니다." + RESET);
             }
         }
     }
@@ -50,11 +53,11 @@ public class RankingView {
             if(! rankingController.showFishingRanking(page++)) return;
 
             System.out.println();
-            System.out.println("1. 다음 페이지");
-            System.out.println("0. 나가기");
+            System.out.println(GREEN + "  [1]" + RESET +  " 다음 페이지");
+            System.out.println(YELLOW + "  [0]" + RESET + " 나가기");
             System.out.println();
 
-            System.out.print("선택 : ");
+            System.out.print(BRIGHT_CYAN + "선택 > " + RESET);
             int choice = sc.nextInt();
 
             switch (choice) {
@@ -63,9 +66,8 @@ public class RankingView {
                 case 0:
                     return;
                 default:
-                    System.out.println("잘못된 선택입니다.");
+                    System.out.println(RED + "❌ 잘못된 선택입니다." + RESET);
             }
-
         } while (true);
     }
 
@@ -78,11 +80,11 @@ public class RankingView {
             if(! rankingController.showGoldRanking(page++)) return;
 
             System.out.println();
-            System.out.println("1. 다음 페이지");
-            System.out.println("0. 나가기");
+            System.out.println(GREEN + "  [1]" + RESET +  " 다음 페이지");
+            System.out.println(YELLOW + "  [0]" + RESET + " 나가기");
             System.out.println();
 
-            System.out.print("선택 : ");
+            System.out.print(BRIGHT_CYAN + "선택 > " + RESET);
             int choice = sc.nextInt();
 
             switch (choice) {
@@ -91,9 +93,8 @@ public class RankingView {
                 case 0:
                     return;
                 default:
-                    System.out.println("잘못된 선택입니다.");
+                    System.out.println(RED + "❌ 잘못된 선택입니다." + RESET);
             }
-
         } while (true);
     }
 }
