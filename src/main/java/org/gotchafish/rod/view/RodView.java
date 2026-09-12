@@ -17,14 +17,14 @@ public class RodView {
 
     public void buyRod() {
         System.out.println();
-        System.out.println(BRIGHT_CYAN + "════════════════════════════════════" + RESET);
-        System.out.println(BOLD + BRIGHT_YELLOW + "          🎣 낚시대 상점" + RESET);
-        System.out.println(BRIGHT_CYAN + "════════════════════════════════════" + RESET);
+        System.out.println(BRIGHT_CYAN + "═".repeat(40) + RESET);
+        System.out.println(BOLD + BRIGHT_YELLOW + "             🎣 낚시대 상점" + RESET);
+        System.out.println(BRIGHT_CYAN +  "═".repeat(40) + RESET);
         System.out.println();
 
         if(!rodController.getRodShopInfo(Session.getUserId())) return;
 
-        System.out.println(YELLOW + "  0. " + RESET + "뒤로가기");
+        System.out.println(YELLOW + "  [0] " + RESET + "뒤로가기");
         System.out.println();
 
         System.out.print(GREEN + "구입할 낚시대 : " + RESET);

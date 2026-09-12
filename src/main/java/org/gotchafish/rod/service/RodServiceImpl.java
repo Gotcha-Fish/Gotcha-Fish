@@ -29,7 +29,7 @@ public class RodServiceImpl implements RodService {
             List<RodDTO> rods = rodDAO.findAllWithQuantity(conn, userId);
 
             if (rods.isEmpty()) {
-                throw new RuntimeException("구매할 수 있는 낚시대가 없습니다.");
+                throw new RuntimeException("구매 가능한 낚시대가 없습니다.");
             }
 
             return rods;
@@ -44,7 +44,7 @@ public class RodServiceImpl implements RodService {
             List<RodDTO> rods = rodDAO.findRodsByUserId(conn, userId);
 
             if (rods.isEmpty()) {
-                throw new RuntimeException("선택할 수 있는 낚시대가 없습니다.");
+                throw new RuntimeException("선택 가능한 낚시대가 없습니다.");
             }
 
             return rods;
@@ -85,7 +85,7 @@ public class RodServiceImpl implements RodService {
             }
 
             if (quantity <= 0) {
-                throw new RuntimeException("구입 수량은 1개 이상이어야 합니다.");
+                throw new RuntimeException("수량은 1개 이상이어야 합니다.");
             }
 
             // 사용자 정보 조회
@@ -165,7 +165,7 @@ public class RodServiceImpl implements RodService {
             int quantity = rodDAO.findUserRodQuantity(conn, userId, rodId);
 
             if (quantity <= 0) {
-                throw new RuntimeException("해당 낚시대 보유 수량이 0입니다.");
+                throw new RuntimeException("낚시대 보유 수량이 0입니다.");
             }
 
             //실제로 사용하기
