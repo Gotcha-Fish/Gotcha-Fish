@@ -16,10 +16,10 @@ public class RodController {
     private final RodService rodService = RodServiceImpl.getInstance();
     private final UserService userService = UserServiceImpl.getInstance();
 
-    private static final RodController rodController = new RodController();
+    private static final RodController instance = new RodController();
 
     public static RodController getInstance() {
-        return rodController;
+        return instance;
     }
 
     public boolean getRodShopInfo(Long userId) {
