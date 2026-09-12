@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static org.gotchafish.common.ConsoleColor.GREEN;
+import static org.gotchafish.common.ConsoleColor.RESET;
+
 public class RaidClient {
     private static final String HOST = PropertyLoader.get("HOST");
     private static final int PORT = Integer.parseInt(PropertyLoader.get("PORT"));
@@ -83,7 +86,7 @@ public class RaidClient {
 
         // 참여 가능한 방이 없는 경우 예외 던지기
         if (rooms.isEmpty()) {
-            throw new RuntimeException("현재 참여 가능한 방이 없습니다.");
+            throw new RuntimeException("참여 가능한 방이 없습니다.");
         }
 
         return rooms;
@@ -130,7 +133,7 @@ public class RaidClient {
 
             System.out.println(message);
 
-            if (message.equals("선택할 물고기 번호를 입력하세요 : ")) {
+            if (message.equals(GREEN + "선택할 물고기 번호를 입력하세요 : " + RESET)) {
                 int choice = scanner.nextInt();
                 writer.println(choice);
             }

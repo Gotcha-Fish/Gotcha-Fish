@@ -1,5 +1,6 @@
 package org.gotchafish.raid.controller;
 
+import org.gotchafish.Main;
 import org.gotchafish.raid.dto.RaidRoomDTO;
 import org.gotchafish.raid.socket.RaidClient;
 import org.gotchafish.raid.view.FailView;

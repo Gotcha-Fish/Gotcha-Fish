@@ -1,7 +1,12 @@
 package org.gotchafish.raid.room;
 
 import org.gotchafish.fish.dto.FishDTO;
+import org.gotchafish.fish.service.FishServiceImpl;
+import org.gotchafish.raid.dto.RaidResultDTO;
+import org.gotchafish.raid.service.RaidServiceImpl;
 import org.gotchafish.raid.socket.RaidClientThread;
+
+import java.sql.SQLException;
 
 public class RaidRoom {
     private final Long roomId;
@@ -101,7 +106,7 @@ public class RaidRoom {
     /**
      * 두 물고기의 희귀도를 비교하여 승자를 결정한다.
      */
-    public synchronized void determineBattleResult() {
+    public synchronized void determineBattleResult() throws SQLException {
         FishDTO hostFish = this.hostFish;
         FishDTO guestFish = this.guestFish;
 
@@ -119,6 +124,44 @@ public class RaidRoom {
             winnerThread = Math.random() < 0.5 ? host : guest;
         }
 
+        // 대결 결과 DB 반영
+        this.processBattleResult();
+
         notifyAll();
+    }
+
+    /**
+     * 대결 결과를 DB에 반영한다. (물고기 수량 변경, 대결 결과 저장)
+     * 승자는 패자의 물고기를 얻고, 패자는 본인 물고기를 잃는다.
+     */
+    private void processBattleResult() throws SQLException {
+        RaidClientThread winner = this.getWinnerThread();
+
+        RaidClientThread loser;
+        FishDTO loserFish;
+
+        if (winner == this.getHostThread()) {
+            loser = this.getGuestThread();
+            loserFish = this.getGuestFish();
+        } else {
+            loser = this.getHostThread();
+            loserFish = this.getHostFish();
+        }
+
+        // 승자가 상대방의 물고기를 획득
+        FishServiceImpl.getInstance().catchFish(winner.getUserId(), loserFish.getFishId());
+
+        // 패자가 자신의 물고기를 잃음
+        FishServiceImpl.getInstance().loseFish(loser.getUserId(), loserFish.getFishId());
+
+        RaidResultDTO raidResultDTO = new RaidResultDTO(
+                this.getHostThread().getUserId(),
+                this.getGuestThread().getUserId(),
+                this.getHostFish().getFishId(),
+                this.getGuestFish().getFishId(),
+                this.getWinnerThread().getUserId()
+        );
+        // 레이드 결과를 DB에 저장
+        RaidServiceImpl.getInstance().insertRaidResult(raidResultDTO);
     }
 }

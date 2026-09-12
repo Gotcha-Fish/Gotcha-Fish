@@ -16,6 +16,8 @@ import java.net.Socket;
 import java.sql.SQLException;
 import java.util.List;
 
+import static org.gotchafish.common.ConsoleColor.*;
+
 public class RaidClientThread extends Thread {
     private final Socket socket;
     private final RaidRoomManager roomManager;
@@ -30,6 +32,10 @@ public class RaidClientThread extends Thread {
     public RaidClientThread(Socket socket, RaidRoomManager roomManager) {
         this.socket = socket;
         this.roomManager = roomManager;
+    }
+
+    public Long getUserId() {
+        return userId;
     }
 
     /**
@@ -80,17 +86,17 @@ public class RaidClientThread extends Thread {
 
                         RaidRoom room = roomManager.createRoom(roomName, this, nickName);
 
-                        writer.println("방을 생성했습니다!");
+                        writer.println(BRIGHT_GREEN + "✨ " + RESET + BRIGHT_PURPLE + "대결방 생성 완료!" + RESET);
                         writer.println();
-                        writer.println("방 번호 : " + room.getRoomId());
+                        writer.println("대결방 번호 : " + room.getRoomId() + RESET);
                         writer.println();
-                        writer.println("상대방을 기다리는 중...");
+                        writer.println(RED + "대결 상대를 기다리는 중..." + RESET);
                         writer.println();
 
                         // 게스트 입장 대기
                         waitForGuest();
 
-                        writer.println("🎉 상대방이 입장했습니다.");
+                        writer.println(BRIGHT_GREEN + "✨ " + RESET + BRIGHT_PURPLE + "대결 상대가 입장했습니다!" + RESET);
                         writer.println();
 
                         writer.println("상대방 : " + room.getGuestNickname());
@@ -112,7 +118,7 @@ public class RaidClientThread extends Thread {
 
                         RaidRoom room = roomManager.joinRoom(roomId, this, nickName);
 
-                        writer.println("🎉 대결방에 입장했습니다!");
+                        writer.println(BRIGHT_GREEN + "✨ " + RESET + BRIGHT_PURPLE + " 대결방에 입장했습니다!" + RESET);
                         writer.println();
 
                         // 호스트 깨우기
@@ -128,7 +134,7 @@ public class RaidClientThread extends Thread {
             } catch (IOException e) {
                 writer.println("ERROR|" + "통신 중 오류가 발생했습니다.");
             } catch (SQLException e) {
-                writer.println("ERROR|" + "DB 조회 중 오류가 발생했습니다.");
+                writer.println("ERROR|" + "DB 처리 중 오류가 발생했습니다.");
             } catch (RuntimeException e) {
                 writer.println("ERROR|" + e.getMessage());
             }
@@ -143,35 +149,46 @@ public class RaidClientThread extends Thread {
      * @param writer 클라이언트 출력을 담당할 PrintWriter
      */
     private void startBattle(BufferedReader reader, PrintWriter writer, RaidRoom room) throws IOException, SQLException {
-        writer.println("대결을 시작합니다.");
-        writer.println();
-
-        writer.println("================================");
-        writer.println("          대결 시작");
-        writer.println("================================");
+        writer.println(BRIGHT_CYAN + "═".repeat(40) + RESET);
+        writer.println(BOLD + BRIGHT_YELLOW + "           ⚔️ 1:1 대결 시작" + RESET);
+        writer.println(BRIGHT_CYAN + "═".repeat(40) + RESET);
 
         // 사용자 보유 물고기 목록 조회
         List<FishDTO> myFish = fishService.getMyFish(userId);
 
         writer.println();
-        writer.println("보유 물고기 중 하나를 선택하세요.");
+        writer.println(BRIGHT_CYAN + "  [ 보유 물고기 목록 ]" + RESET);
+        writer.println();
 
-        writer.println();
-        writer.println("-----------------------------------");
-        writer.println();
+        writer.println("  " + BOLD + "번호   물고기명      수량     희귀도" + RESET);
+        writer.println(BRIGHT_CYAN + "  " + "═".repeat(36) + RESET);
 
         for (int i = 0; i < myFish.size(); i++) {
             FishDTO fish = myFish.get(i);
 
-            writer.println((i + 1) + ". " + fish.getFishName() + " X " + fish.getQuantity());
-            writer.println("   희귀도 : " + fish.getRarity());
-            writer.println();
+            String number = String.valueOf(i + 1);
+            String fishName = fish.getFishName();
+            String quantity = String.valueOf(fish.getQuantity());
+            String rarity = String.valueOf(fish.getRarity());
+
+            writer.print("  " + number);
+            writer.print(" ".repeat(Math.max(0, 7 - getDisplayWidth(number))));
+
+            writer.print(fishName);
+            writer.print(" ".repeat(Math.max(0, 12 - getDisplayWidth(fishName))));
+
+            // 수량 오른쪽 정렬
+            writer.print(" ".repeat(Math.max(0, 6 - getDisplayWidth(quantity))));
+            writer.print(BRIGHT_BLUE + quantity + RESET);
+
+            // 희귀도 오른쪽 정렬
+            writer.print(" ".repeat(Math.max(0, 11 - getDisplayWidth(rarity))));
+            writer.println(BRIGHT_GREEN + rarity + RESET);
         }
+        writer.println(BRIGHT_CYAN + "  " + "═".repeat(36) + RESET);
 
-        writer.println("-----------------------------------");
         writer.println();
-
-        writer.println("선택할 물고기 번호를 입력하세요 : ");
+        writer.println(GREEN + "선택할 물고기 번호를 입력하세요 : " + RESET);
         int choice = Integer.parseInt(reader.readLine());
         FishDTO selectedFish = myFish.get(choice - 1);
 
@@ -179,7 +196,7 @@ public class RaidClientThread extends Thread {
         writer.println(selectedFish.getFishName() + "를 선택했습니다!");
 
         writer.println();
-        writer.println("상대방의 선택을 기다리는 중...");
+        writer.println(RED + "상대방 선택을 기다리는 중..." + RESET);
 
         // 상대방 선택 기다리기
         room.selectFish(this, selectedFish);
@@ -215,61 +232,58 @@ public class RaidClientThread extends Thread {
         String winnerNickname = winner.nickName;
         FishDTO winnerFish = winner == room.getHostThread() ? hostFish : guestFish;
 
-        boolean isDraw = hostFish.getRarity().getProbability()
-                == guestFish.getRarity().getProbability();
+        boolean isDraw = hostFish.getRarity().getProbability() == guestFish.getRarity().getProbability();
 
-        String drawMessage = "";
+        writer.println();
+        writer.println(BRIGHT_CYAN + "═".repeat(40) + RESET);
+        writer.println(BOLD + BRIGHT_YELLOW + "             ⚔️ 대결 결과" + RESET);
+        writer.println(BRIGHT_CYAN + "═".repeat(40) + RESET);
+        writer.println();
 
+        writer.println("  " + BOLD + room.getHostNickname() + RESET);
+        writer.println("  🐟 " + hostFish.getFishName());
+        writer.println("     희귀도 : " + BRIGHT_PURPLE + hostFish.getRarity() + RESET);
+
+        writer.println();
+        writer.println(BOLD + BRIGHT_CYAN + "                 VS" + RESET);
+        writer.println();
+
+        writer.println("  " + BOLD + room.getGuestNickname() + RESET);
+        writer.println("  🐟 " + guestFish.getFishName());
+        writer.println("     희귀도 : " + BRIGHT_PURPLE + guestFish.getRarity() + RESET);
+
+        writer.println();
+        writer.println(BRIGHT_CYAN + "─".repeat(36) + RESET);
+        writer.println();
+
+        // 희귀도가 같은 경우
         if (isDraw) {
-            drawMessage = """
-                    
-                    희귀도가 같습니다!
-                    
-                    ⚔️ 승부를 랜덤 결정합니다...
-                    
-                    --------------------------------
-                    """;
+            writer.println(BRIGHT_YELLOW + "⚔️ 희귀도가 같습니다!" + RESET);
+            writer.println();
+            writer.println("승부를 랜덤으로 결정합니다...");
+            writer.println();
         }
 
-        String resultMessage = """
-                
-                ================================
-                          대결 결과
-                ================================
-                
-                %s
-                🐟 %s
-                희귀도 : %s
-                
-                      VS
-                
-                %s
-                🐟 %s
-                희귀도 : %s
-                
-                --------------------------------
-                %s
-                🏆 %s 승리!
-                
-                🎁 %s 획득
-                
-                
-                두 물고기가 모두 %s의 보관함으로 이동합니다.
-                """.formatted(
-                room.getHostNickname(),
-                hostFish.getFishName(),
-                hostFish.getRarity(),
+        writer.println(BOLD + BRIGHT_PURPLE + "🏆 " + winnerNickname + "님이 승리했습니다!" + RESET);
 
-                room.getGuestNickname(),
-                guestFish.getFishName(),
-                guestFish.getRarity(),
+        writer.println();
+        writer.println("🎁 " + YELLOW + winnerFish.getFishName() + RESET + "을(를) 획득했습니다!");
 
-                drawMessage,
-                winnerNickname,
-                winnerFish.getFishName(),
-                winnerNickname
-        );
+        writer.println();
+        writer.println(BOLD + winnerNickname + RESET + "님이 두 물고기를 모두 차지합니다.");
+    }
 
-        writer.println(resultMessage);
+    private static int getDisplayWidth(String text) {
+        int width = 0;
+
+        for (char c : text.toCharArray()) {
+            if (c >= 0xAC00 && c <= 0xD7A3) {
+                width += 2;
+            } else {
+                width += 1;
+            }
+        }
+
+        return width;
     }
 }
