@@ -26,23 +26,22 @@ public class SuccessView {
     public static void attendanceReward(UserDTO user) {
         System.out.println();
         System.out.println(BRIGHT_CYAN + "[ 오늘의 출석 보상 ]" + RESET);
-        System.out.println(BRIGHT_GREEN + "🎁 " + RESET + "출석 보상 " + YELLOW + 10 + "G" + RESET + "를 획득했습니다!");
-        System.out.println(BRIGHT_GREEN + "🎁 " + RESET + "출석 보상 " + YELLOW + "초급 낚시대 1개" + RESET + "를 획득했습니다!");
-        System.out.println();
+        System.out.println(BRIGHT_GREEN + "🎁 " + RESET + YELLOW + 10 + "G" + RESET + "를 획득했습니다!");
+        System.out.println(BRIGHT_GREEN + "🎁 " + RESET + YELLOW + "대충 만든 낚시대 X 1" + RESET + "를 획득했습니다!");
     }
 
     // 프로필 조회 성공
     public static void profileSuccess(UserDTO user) {
-        System.out.println(BOLD + BRIGHT_PURPLE + "👤 닉네임" + RESET);
-        System.out.println("   " + BOLD + user.getNickname() + RESET);
+        System.out.println(BOLD + BRIGHT_PURPLE + "  👤 닉네임" + RESET);
+        System.out.println("     " + BOLD + user.getNickname() + RESET);
 
         System.out.println();
-        System.out.println(BOLD + BLUE + "🐟 총 잡은 물고기" + RESET);
-        System.out.println("   " + BOLD + user.getTotalFishing() + "마리" + RESET);
+        System.out.println(BOLD + BLUE + "  🐟 총 잡은 물고기" + RESET);
+        System.out.println("     " + BOLD + user.getTotalFishing() + "마리" + RESET);
 
         System.out.println();
-        System.out.println( BOLD + YELLOW + "💰 보유 골드" + RESET);
-        System.out.println("   " + BOLD  + user.getGold() + "G" + RESET);
+        System.out.println( BOLD + YELLOW + "  💰 보유 골드" + RESET);
+        System.out.println("     " + BOLD  + user.getGold() + "G" + RESET);
     }
 
     // 닉네임 변경 성공

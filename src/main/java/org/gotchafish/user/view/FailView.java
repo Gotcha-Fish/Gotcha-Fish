@@ -20,7 +20,7 @@ public class FailView {
     // 내 정보 조회 실패
     public static void profileFail(String message) {
         System.out.println();
-        System.out.println(RED + "❌ 내 정보 불러오기에 실패했습니다." + RESET);
+        System.out.println(RED + "❌ 내 정보 조회에 실패했습니다." + RESET);
         System.out.println(YELLOW + "실패 사유 : " + RESET + message);
     }
 

@@ -15,9 +15,9 @@ public class UserView {
 
     public void signUp() {
         System.out.println();
-        System.out.println(BRIGHT_CYAN + "════════════════════════════════════" + RESET);
-        System.out.println(BOLD + BRIGHT_YELLOW + "             🐣 회원가입" + RESET);
-        System.out.println(BRIGHT_CYAN + "════════════════════════════════════" + RESET);
+        System.out.println(BRIGHT_CYAN + "═".repeat(40) + RESET);
+        System.out.println(BOLD + BRIGHT_YELLOW + "              🐣 회원가입" + RESET);
+        System.out.println(BRIGHT_CYAN +  "═".repeat(40) + RESET);
         System.out.println();
 
         System.out.print(GREEN + "아이디 : " + RESET);
@@ -38,9 +38,9 @@ public class UserView {
 
     public void loginInput() {
         System.out.println();
-        System.out.println(BRIGHT_CYAN + "════════════════════════════════════" + RESET);
-        System.out.println(BOLD + BRIGHT_YELLOW + "            👋 로그인" + RESET);
-        System.out.println(BRIGHT_CYAN + "════════════════════════════════════" + RESET);
+        System.out.println(BRIGHT_CYAN +  "═".repeat(40) + RESET);
+        System.out.println(BOLD + BRIGHT_YELLOW + "               👋 로그인" + RESET);
+        System.out.println(BRIGHT_CYAN +  "═".repeat(40) + RESET);
         System.out.println();
 
         System.out.print(GREEN + "아이디 : " + RESET);
@@ -55,17 +55,17 @@ public class UserView {
 
     public void profile() {
         System.out.println();
-        System.out.println(BRIGHT_CYAN + "════════════════════════════════════" + RESET);
-        System.out.println(BOLD + BRIGHT_YELLOW + "            ✨ 내 정보" + RESET);
-        System.out.println(BRIGHT_CYAN + "════════════════════════════════════" + RESET);
+        System.out.println(BRIGHT_CYAN +  "═".repeat(40) + RESET);
+        System.out.println(BOLD + BRIGHT_YELLOW + "              ✨ 내 정보" + RESET);
+        System.out.println(BRIGHT_CYAN +  "═".repeat(40) + RESET);
         System.out.println();
 
         if (!controller.profile(Session.getUserId())) return;
 
         System.out.println();
-        System.out.println(GREEN + "  1. " + RESET + "닉네임 수정");
-        System.out.println(GREEN + "  2. " + RESET + "비밀번호 수정");
-        System.out.println(YELLOW + "  0. " + RESET + "뒤로가기");
+        System.out.println(GREEN + "  [1] " + RESET + "닉네임 수정");
+        System.out.println(GREEN + "  [2] " + RESET + "비밀번호 수정");
+        System.out.println(YELLOW + "  [0] " + RESET + "뒤로가기");
         System.out.println();
 
         System.out.print(BRIGHT_CYAN + "선택 > " + RESET);

@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
 
             // 기본 낚시터 잠금 해제
             if (!spotDAO.insert(conn, userId, 1L)) {
-                throw new RuntimeException("기본 낚시터 잠금 해제에 실패했습니다.");
+                throw new RuntimeException("낚시터 잠금 해제에 실패했습니다.");
             }
 
             // 회원가입 보상 100G 지급
@@ -225,7 +225,7 @@ public class UserServiceImpl implements UserService {
 
             // 기존 비밀번호 확인
             if (!BCrypt.checkpw(oldPassword, user.getPassword())) {
-                throw new RuntimeException("현재 비밀번호가 일치하지 않습니다.");
+                throw new RuntimeException("비밀번호가 일치하지 않습니다.");
             }
 
             // 새 비밀번호 암호화
