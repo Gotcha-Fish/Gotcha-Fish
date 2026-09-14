@@ -24,9 +24,9 @@ public class SpotController {
 
             SuccessView.spotSuccessView(userDTO, result);
         } catch (RuntimeException e) {
-            FailView.spotFailView(e.getMessage());
+            FailView.spotListFail(e.getMessage());
         } catch (SQLException e) {
-            FailView.spotFailView("낚시터 조회에 실패했습니다.");
+            FailView.spotListFail("낚시터 조회에 실패했습니다.");
         }
     }
 
@@ -39,9 +39,9 @@ public class SpotController {
                 SuccessView.unlockSuccessView(spot.getSpotName(), spot.getUnlockPrice());
             }
         } catch (RuntimeException e) {
-            FailView.spotFailView(e.getMessage());
+            FailView.unlockSpotFail(e.getMessage());
         } catch (SQLException e) {
-            FailView.spotFailView("낚시터 잠금 해제 중 오류가 발생했습니다.");
+            FailView.unlockSpotFail("낚시터 잠금 해제 중 오류가 발생했습니다.");
         }
     }
 
@@ -50,9 +50,9 @@ public class SpotController {
             List<SpotDTO> spots = spotService.getSpotList(userId);
             SuccessView.selectSpotView(spots);
         } catch (RuntimeException e) {
-            FailView.spotFailView(e.getMessage());
+            FailView.selectSpotFail(e.getMessage());
         } catch (SQLException e) {
-            FailView.spotFailView("낚시터 조회에 실패했습니다.");
+            FailView.selectSpotFail("낚시터 조회에 실패했습니다.");
         }
 
     }
