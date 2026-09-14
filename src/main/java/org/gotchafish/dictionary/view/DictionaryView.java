@@ -5,6 +5,8 @@ import org.gotchafish.user.dto.Session;
 
 import java.util.Scanner;
 
+import static org.gotchafish.common.ConsoleColor.*;
+
 public class DictionaryView {
     private final Scanner sc = new Scanner(System.in);
 
@@ -12,9 +14,9 @@ public class DictionaryView {
 
     public void showDictionary() {
         System.out.println();
-        System.out.println("================================");
-        System.out.println("          물고기 도감");
-        System.out.println("================================");
+        System.out.println(BRIGHT_CYAN + "═".repeat(40) + RESET);
+        System.out.println(BOLD + BRIGHT_YELLOW + "             📖 물고기 도감" + RESET);
+        System.out.println(BRIGHT_CYAN + "═".repeat(40) + RESET);
 
         Long userId = Session.getUserId();
 
@@ -26,11 +28,11 @@ public class DictionaryView {
             if (!dictionaryController.showDictionaryPage(userId, page++)) return;
 
             System.out.println();
-            System.out.println("1. 다음 페이지");
-            System.out.println("0. 나가기");
+            System.out.println(YELLOW + "  [1] " + RESET + "다음 페이지");
+            System.out.println(YELLOW + "  [0] " + RESET + "나가기");
             System.out.println();
 
-            System.out.print("선택 : ");
+            System.out.print(GREEN + "선택 : " + RESET);
             int choice = sc.nextInt();
 
             switch (choice) {
@@ -39,7 +41,7 @@ public class DictionaryView {
                 case 0:
                     return;
                 default:
-                    System.out.println("잘못된 선택입니다.");
+                    System.out.println(RED + "잘못된 선택입니다." + RESET);
             }
         } while (true);
     }

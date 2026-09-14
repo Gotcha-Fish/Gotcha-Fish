@@ -4,6 +4,8 @@ import org.gotchafish.dictionary.dto.DictionaryEntryDTO;
 
 import java.util.List;
 
+import static org.gotchafish.common.ConsoleColor.*;
+
 public class SuccessView {
 
     // 도감 완성률 출력
@@ -11,32 +13,38 @@ public class SuccessView {
         double rate = (collectedCount * 100.0) / total;
 
         System.out.println();
-        System.out.println("도감 완성률 : " + collectedCount + " / " + total + " (" + rate + "%)");
+        System.out.println("  " + BRIGHT_CYAN + "[ 도감 완성률 ]" + RESET);
+        System.out.println("  " + "✦" + RESET + " " + BOLD + YELLOW + collectedCount + " / " + total + RESET
+                + " (" + BOLD + BRIGHT_BLUE + String.format("%.1f", rate) + "%" + RESET + ")");
     }
 
     // 낚시터 하나의 물고기 목록만 출력
     public static void dictionaryCategorySuccess(String spotName, List<DictionaryEntryDTO> entries) {
         System.out.println();
-        System.out.println("[ " + getSpotEmoji(spotName) + " " + spotName + " ]");
+        System.out.println("  " + BRIGHT_CYAN + "[ " + getSpotEmoji(spotName) + " " + spotName + " ]" + RESET);
         System.out.println();
-        System.out.println("물고기         희귀도      상태");
-        System.out.println("----------------------------");
+        System.out.println(BOLD + "물고기         희귀도      상태" + RESET);
+        System.out.println(BRIGHT_CYAN + "-".repeat(30) + RESET);
 
         for (DictionaryEntryDTO entry : entries) {
             String fishName = entry.getFishName();
             String rarity = entry.getRarity().toString();
-            String status = entry.isCollected() ? "✅  수집" : "❓ 미발견";
+            boolean collected = entry.isCollected();
 
-            System.out.print(fishName);
+            System.out.print(BOLD + fishName + RESET);
             printSpaces(14 - getDisplayWidth(fishName));
 
-            System.out.print(rarity);
+            System.out.print(BRIGHT_BLUE + rarity + RESET);
             printSpaces(12 - getDisplayWidth(rarity));
 
-            System.out.println(status);
+            if (collected) {
+                System.out.println(GREEN + "✅  수집" + RESET);
+            } else {
+                System.out.println(RED + "❓ 미발견" + RESET);
+            }
         }
 
-        System.out.println("--------------------------------");
+        System.out.println(BRIGHT_CYAN + "-".repeat(30) + RESET);
     }
 
     private static int getDisplayWidth(String text) {
