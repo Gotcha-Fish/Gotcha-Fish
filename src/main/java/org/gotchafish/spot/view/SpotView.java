@@ -1,10 +1,12 @@
 package org.gotchafish.spot.view;
 
 import org.gotchafish.spot.controller.SpotController;
+import org.gotchafish.spot.dto.SpotDTO;
 import org.gotchafish.user.dto.Session;
 
 import static org.gotchafish.common.ConsoleColor.*;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class SpotView {
@@ -36,12 +38,24 @@ public class SpotView {
     }
 
     public Long selectSpot(Long userId) {
-        spotController.selectSpot(userId);
+        List<SpotDTO> spots = spotController.selectSpot(userId);
+
+        if (spots == null) return null;
 
         System.out.print(BRIGHT_CYAN + "선택 > " + RESET);
         int choice = sc.nextInt();
         sc.nextLine();
 
+        boolean found = false;
+
+        for (SpotDTO spot : spots) {
+            if (spot.getSpotId() == (long) choice) {
+                found = true;
+                if (!spot.isUnlocked()) return null;
+            }
+        }
+
+        if (!found) return null;
         return (long) choice;
     }
 
