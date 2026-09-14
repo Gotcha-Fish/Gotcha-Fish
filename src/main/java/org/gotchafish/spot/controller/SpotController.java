@@ -45,15 +45,17 @@ public class SpotController {
         }
     }
 
-    public void selectSpot(Long userId) {
+    public List<SpotDTO> selectSpot(Long userId) {
         try {
             List<SpotDTO> spots = spotService.getSpotList(userId);
             SuccessView.selectSpotView(spots);
+            return spots;
         } catch (RuntimeException e) {
             FailView.selectSpotFail(e.getMessage());
         } catch (SQLException e) {
             FailView.selectSpotFail("낚시터 조회에 실패했습니다.");
         }
 
+        return null;
     }
 }
