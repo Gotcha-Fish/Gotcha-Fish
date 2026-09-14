@@ -9,6 +9,8 @@ import org.gotchafish.user.dto.Session;
 
 import java.util.Scanner;
 
+import static org.gotchafish.common.ConsoleColor.*;
+
 public class FishingView {
     private final Scanner sc = new Scanner(System.in);
 
@@ -18,14 +20,15 @@ public class FishingView {
 
     public void startFishing() {
         System.out.println();
-        System.out.println("================================");
-        System.out.println("            낚시하기");
-        System.out.println("================================");
+        System.out.println(BRIGHT_CYAN +  "═".repeat(40) + RESET);
+        System.out.println(BOLD + BRIGHT_YELLOW + "             🎣 낚시 하기" + RESET);
+        System.out.println(BRIGHT_CYAN +  "═".repeat(40) + RESET);
 
         Long userId = Session.getUserId();
 
         // 1. 낚시터 선택
         Long spotId = spotView.selectSpot(userId);
+        if (spotId == null) return;
 
         // 2. 물고기 등장
         FishDTO fish = fishingController.generateFish(spotId);
@@ -34,7 +37,7 @@ public class FishingView {
         // 3. 낚시대 선택
         if (!rodController.getMyRodSInfo(userId)) return;
 
-        System.out.println("선택 : ");
+        System.out.print(BRIGHT_CYAN + "선택 > " + RESET);
         int choice = sc.nextInt();
         sc.nextLine();
 
