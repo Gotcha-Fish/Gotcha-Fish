@@ -51,11 +51,16 @@ public class SpotView {
         for (SpotDTO spot : spots) {
             if (spot.getSpotId() == (long) choice) {
                 found = true;
-                if (!spot.isUnlocked()) return null;
+                if (!spot.isUnlocked()) {
+                    FailView.selectSpotFail("잠긴 낚시터 입니다. 먼저 상점에서 해제해주세요.");
+                    return null;
+                }
             }
         }
-
-        if (!found) return null;
+        if (!found) {
+            FailView.selectSpotFail("존재하지 않는 낚시터 입니다.");
+            return null;
+        }
         return (long) choice;
     }
 
