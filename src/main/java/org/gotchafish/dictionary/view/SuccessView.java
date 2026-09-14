@@ -23,8 +23,8 @@ public class SuccessView {
         System.out.println();
         System.out.println("  " + BRIGHT_CYAN + "[ " + getSpotEmoji(spotName) + " " + spotName + " ]" + RESET);
         System.out.println();
-        System.out.println(BOLD + "물고기         희귀도      상태" + RESET);
-        System.out.println(BRIGHT_CYAN + "-".repeat(30) + RESET);
+        System.out.println(BOLD + "물고기         희귀도          상태" + RESET);
+        System.out.println(BRIGHT_CYAN + "═".repeat(40) + RESET);
 
         for (DictionaryEntryDTO entry : entries) {
             String fishName = entry.getFishName();
@@ -44,7 +44,7 @@ public class SuccessView {
             }
         }
 
-        System.out.println(BRIGHT_CYAN + "-".repeat(30) + RESET);
+        System.out.println(BRIGHT_CYAN + "═".repeat(40) + RESET);
     }
 
     private static int getDisplayWidth(String text) {
