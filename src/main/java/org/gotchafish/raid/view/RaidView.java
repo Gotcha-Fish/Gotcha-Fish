@@ -73,8 +73,4 @@ public class RaidView {
 
         raidController.joinRoom(userId, roomId);
     }
-
-    public static void main(String[] args) {
-        new RaidView().findRooms(2L);
-    }
 }
